@@ -1,6 +1,6 @@
 import Navbar from "../features/navbar/Navbar";
 import ProductList from "../features/productlist/ProductList";
-export default function Homepage(){
+ function Homepage(){
     return (
         <>
         <Navbar>
@@ -9,3 +9,5 @@ export default function Homepage(){
         </>
     )
 }
+
+export default Homepage
