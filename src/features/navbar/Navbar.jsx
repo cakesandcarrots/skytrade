@@ -53,11 +53,13 @@ export default function Navbar({ children }) {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                    className="h-8 w-8"
-                  />
+                  <Link to="/">
+                    <img
+                      alt="Your Company"
+                      src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                      className="h-8 w-8"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -82,17 +84,20 @@ export default function Navbar({ children }) {
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <Link to="/cart">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
-                  </button>
+                    <button
+                      type="button"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <span className="absolute -inset-1.5" />
+                      <span className="sr-only">View notifications</span>
+                      <ShoppingCartIcon
+                        aria-hidden="true"
+                        className="h-6 w-6"
+                      />
+                    </button>
                   </Link>
                   <span className="inline-flex items-center z-10 rounded-md bg-red-50 px-2 py-1 text-xs mb-7 -ml-3 font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-        3
+                    3
                   </span>
 
                   {/* Profile dropdown */}
@@ -181,19 +186,18 @@ export default function Navbar({ children }) {
                   </div>
                 </div>
                 <Link to="/cart">
-                <button
-                  type="button"
-                  className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
-       
-                </button>
+                  <button
+                    type="button"
+                    className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">View notifications</span>
+                    <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
+                  </button>
                 </Link>
                 <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-4 z-10 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
                   3
-                  </span>
+                </span>
               </div>
               <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (

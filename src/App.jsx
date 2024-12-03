@@ -3,10 +3,12 @@ import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/HomePage";
 import Cart from "./features/cart/Cart";
 import CheckoutPage from "./pages/CheckoutPage";
+import ProductDetails from "./features/product/components/ProductDetails";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import ProductList from "./features/product/components/ProductList";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
     path: "/checkout",
     element:<CheckoutPage/>,
   },
+  {
+    path: "/productdetails",
+    element: <ProductDetails/>
+  }
 
 ]);
 
