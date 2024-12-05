@@ -12,15 +12,16 @@ export const fetchAllProductsAsync = createAsyncThunk('product/fetchAllProducts'
 });
 
 
-export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProductsByFilters', async (filter) => {
-    const response = await fetchProductsByFilters(filter);
+export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProductsByFilters', async ({filter,sort}) => {
+    const response = await fetchProductsByFilters({filter,sort});
     let filteredData = response.data;
-  
-    if (filter.category) {
-      filteredData = filteredData.filter(item => item.category === filter.category);
+  console.log(filteredData)
+  console.log(sort)
+    if (filter.category && filter.category.length) {
+      filteredData = filteredData.filter(item => item.category === filter.category[filter.category.length-1]);
     }
-    if (filter.brand) {
-      filteredData = filteredData.filter(item => item.brand === filter.brand);
+    else if (filter.brand && filter.brand.length) {
+      filteredData = filteredData.filter(item => item.brand === filter.brand[filter.brand.length-1]);
     }  
     return filteredData;
   });
