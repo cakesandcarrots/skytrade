@@ -6,9 +6,8 @@ export function fetchAllProducts() {
   });
 }
 
-export function fetchProductsByFilters({filter, sort}) {
+export function fetchProductsByFilters({filter, sort,pagination}) {
   let queryString = "";
-  console.log(filter)
   for (let key in filter) {
     const categoryValues = filter[key];
     if (categoryValues.length) {
@@ -18,14 +17,35 @@ export function fetchProductsByFilters({filter, sort}) {
     }
   }
 
+  
+
+  if(pagination._page && pagination._per_page)
+  queryString+= `_page=${pagination._page}&_per_page=${pagination._per_page}&`
   if (sort._sort) {
-    queryString += `_sort=${sort._sort}`;
+    queryString += `_sort=${sort._sort}&`;
   }
 
+
   const finalUrl = "http://localhost:3000/products?" + queryString;
-console.log(finalUrl)
   return new Promise(async (resolve) => {
     const response = await fetch(finalUrl);
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+
+export function fetchAllCategories() {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:3000/categories");
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function fetchAllBrands() {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:3000/brands");
     const data = await response.json();
     resolve({ data });
   });

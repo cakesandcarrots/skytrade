@@ -6012,15 +6012,9 @@
   
 
 
-  const categories = [...new Set(products.map(product => product.category))];
-  console.log(categories.map(c => ({
-    value: c,
-    label: c ? c.split('-').join(' ') : '', // Safely handle undefined or null values
-    checked: false
-  })));
+  
 
 
   export const selectAllProducts = (state)=>state.product.products;
-console.log(selectAllProducts)
 
 {}
