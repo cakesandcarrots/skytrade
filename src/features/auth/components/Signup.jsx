@@ -1,6 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { createUserAsync, selectLoggedInUser } from '../authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 function Signup() {
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+const user = useSelector(selectLoggedInUser);
+  
+console.log(user)
   return (
    <>
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -16,7 +29,9 @@ function Signup() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form noValidate className="space-y-6" onSubmit={handleSubmit((data)=>{
+         dispatch(createUserAsync({email:data.email, password: data.password}))  
+          })}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -24,12 +39,11 @@ function Signup() {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
+                  {...register("email",{required: "Email is Required", pattern: {value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,message: "Email is Invalid"}})}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                               {errors.email && <p className='text-red-600'>{errors.email.message}</p>}
+
               </div>
             </div>
 
@@ -46,11 +60,11 @@ function Signup() {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
-                  type="password"
-                  required
+                 {...register("password",{required: "Password is required"})}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
+                <p></p>
               </div>
             </div>
             <div>
@@ -63,12 +77,11 @@ function Signup() {
               
               <div className="mt-2">
                 <input
-                  id="confirmpassword"
-                  name="confirmpassword"
-                  type="password"
-                  required
+                  id="confirmPassword"
+                  {...register("confirmPassword",{required: "Password confirmation is required",validate:(value, formValues)=>{if(value!==formValues.password) return "Doesn't match with password"}  } )}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.confirmPassword && <p className='text-red-600' >{errors.confirmPassword.message}</p>}
               </div>
             </div>
             <div>

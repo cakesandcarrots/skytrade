@@ -1,23 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllProducts, fetchProductsByFilters,fetchAllBrands,fetchAllCategories} from "./ProductAPI";
+import { fetchAllProducts, fetchProductsByFilters,fetchAllBrands,fetchAllCategories, fetchProductById} from "./ProductAPI";
 
 const initialState = {
     products: [],
     totalitems: 0,
     status: 'idle',
     categories: [],
-    brands: []
+    brands: [],
+    item: null
 };
 
 export const fetchAllProductsAsync = createAsyncThunk('product/fetchAllProducts',async()=>{
     const response = await fetchAllProducts();
     return response.data
 });
+
+
 export const fetchAllCategoriesAsync = createAsyncThunk('product/fetchAllCategories',async()=>{
 
     const response = await fetchAllCategories();
     return response.data
 });
+
+
 export const fetchAllBrandsAsync = createAsyncThunk('product/fetchAllBrands',async()=>{
     const response = await fetchAllBrands();
     return response.data
@@ -33,13 +38,18 @@ export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProduc
     else if (filter.brand && filter.brand.length) {
       filteredData = filteredData.filter(item => item.brand === filter.brand[filter.brand.length-1]);
     }  
-filteredData.totalitems = response.data.items
+    filteredData.totalitems = response.data.items
     return filteredData;
   });
   
   
-  
 
+  export const fetchProductByIdAsync = createAsyncThunk('product/fetchProductById',async(id)=>{
+    const response = await fetchProductById(id);
+    return response.data;
+});
+  
+  
 
 
 export const productSlice = createSlice({
@@ -75,6 +85,14 @@ export const productSlice = createSlice({
         .addCase(fetchAllBrandsAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
             state.brands = action.payload
+        })
+        .addCase(fetchProductByIdAsync.pending,(state)=>{
+            state.status ='loading';
+            state.item = null
+        })
+        .addCase(fetchProductByIdAsync.fulfilled,(state,action)=>{
+            state.status = 'idle';
+            state.item = action.payload
         });
     },
 
@@ -85,4 +103,5 @@ export const selectAllProducts = (state)=>state.product.products;
 export const selectItemCount = (state)=>state.product.totalitems;
 export const selectAllCategories = (state)=>state.product.categories;
 export const selectAllBrands = (state)=>state.product.brands;
+export const selectProductById = (state)=>state.product.item
 export default productSlice.reducer;
