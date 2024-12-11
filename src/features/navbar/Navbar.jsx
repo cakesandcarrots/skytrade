@@ -26,17 +26,18 @@ const navigation = [
   { name: "Calendar", href: "#", current: false },
   { name: "Reports", href: "#", current: false },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }) {
+  const userNavigation = [
+    { name: "Your Profile", link:"/" },
+    { name: "Settings",link:"/"  },
+    { name: "Sign out",link: "/login" },
+  ];
   return (
     <>
       {/*
@@ -119,12 +120,12 @@ export default function Navbar({ children }) {
                     >
                       {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
-                          <a
-                            href={item.href}
+                          <Link to={item.link}
+                           
                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         </MenuItem>
                       ))}
                     </MenuItems>
@@ -201,14 +202,14 @@ export default function Navbar({ children }) {
               </div>
               <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (
+                  <Link to={item.link}>
                   <DisclosureButton
                     key={item.name}
-                    as="a"
-                    href={item.href}
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     {item.name}
                   </DisclosureButton>
+                  </Link>
                 ))}
               </div>
             </div>

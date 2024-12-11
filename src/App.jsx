@@ -9,6 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ProductList from "./features/product/components/ProductList";
+import Protected from "./features/auth/components/Protected";
 
 const router = createBrowserRouter([
   {
@@ -21,19 +22,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element:<Homepage/>,
+    element:<Protected><Homepage/></Protected>,
   },
   {
     path: "/cart",
-    element:<Cart/>,
+    element:<Protected><Cart/></Protected>,
   },
   {
     path: "/checkout",
-    element:<CheckoutPage/>,
+    element:<Protected><CheckoutPage/></Protected>,
   },
   {
     path: "/productdetails/:id",
-    element: <ProductDetails />
+    element: <Protected><ProductDetails/></Protected>
   },
 
 ]);

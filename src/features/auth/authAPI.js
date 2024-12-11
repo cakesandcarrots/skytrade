@@ -7,4 +7,24 @@ const response = await fetch('http://localhost:3000/users',{
 const data = await response.json()
 return data; 
 
+
 }
+
+export const checkUser = async (userData) => {
+    const email = userData.email;
+  
+    try {
+      const response = await fetch(`http://localhost:3000/users?email=${email}`);
+      const data = await response.json();
+  
+      if (data.length === 0 || userData.password !== data[0].password) {
+        throw new Error('Wrong credentials');
+      }
+  
+      return data[0]; 
+    } catch (error) {
+      console.error(error.message);
+      return { error: 'Wrong credentials' }; 
+    }
+  };
+  
