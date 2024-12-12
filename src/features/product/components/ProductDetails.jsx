@@ -5,10 +5,15 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import Navbar from "../../navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
+import { selectLoggedInUser } from "../../auth/authSlice";
+import { addtoCartAsync } from "../../cart/cartSlice";
 export default function ProductDetails() {
   const reviews = { href: "#", average: 4, totalCount: 117 };
 
   const product = useSelector(selectProductById);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
 
   const colors = [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -35,18 +40,19 @@ export default function ProductDetails() {
     "Ultra-soft 100% cotton",
   ];
 
+  const handleCart = (e) => {
+    e.preventDefault();
+    const newItem = { ...product, quantity: 1, user: user.id };
+    delete newItem["id"];
+    dispatch(addtoCartAsync(newItem));
+  };
 
-
-  
-  const { id } = useParams();
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
-  },[dispatch]);
+  }, [dispatch]);
 
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-console.log(product)
   return product ? (
     <div className="bg-white">
       <Navbar />
@@ -59,7 +65,7 @@ console.log(product)
             <li>
               <div className="flex items-center">
                 <a className="mr-2 text-sm font-medium text-gray-900">
-                  {(product.category).toUpperCase()}
+                  {product.category.toUpperCase()}
                 </a>
                 <svg
                   fill="currentColor"
@@ -86,13 +92,13 @@ console.log(product)
 
         {/* Image gallery */}
         <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-  <div className="aspect-h-4 aspect-w-3 overflow-hidden rounded-lg lg:col-start-2 lg:col-span-1 flex justify-center items-center">
-    <img
-      src={product.images[0]}
-      className="h-full w-auto max-w-full object-cover object-center"
-    />
-  </div>
-</div>
+          <div className="aspect-h-4 aspect-w-3 overflow-hidden rounded-lg lg:col-start-2 lg:col-span-1 flex justify-center items-center">
+            <img
+              src={product.images[0]}
+              className="h-full w-auto max-w-full object-cover object-center"
+            />
+          </div>
+        </div>
 
         {/* Product info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
@@ -232,6 +238,7 @@ console.log(product)
               </div>
 
               <button
+                onClick={handleCart}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

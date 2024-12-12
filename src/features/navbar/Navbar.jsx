@@ -12,7 +12,9 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectProductsByUserId } from "../cart/cartSlice";
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
@@ -33,6 +35,8 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
+  const items = useSelector(selectProductsByUserId);
+  console.log(items)
   const userNavigation = [
     { name: "Your Profile", link:"/" },
     { name: "Settings",link:"/"  },
@@ -67,7 +71,6 @@ export default function Navbar({ children }) {
                     {navigation.map((item) => (
                       <a
                         key={item.name}
-                        href={item.href}
                         aria-current={item.current ? "page" : undefined}
                         className={classNames(
                           item.current
@@ -97,9 +100,9 @@ export default function Navbar({ children }) {
                       />
                     </button>
                   </Link>
-                  <span className="inline-flex items-center z-10 rounded-md bg-red-50 px-2 py-1 text-xs mb-7 -ml-3 font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                    3
-                  </span>
+                 {items.length>0 &&  <span className="inline-flex items-center z-10 rounded-md bg-red-50 px-2 py-1 text-xs mb-7 -ml-3 font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                    {items.length}
+                  </span>}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -155,8 +158,6 @@ export default function Navbar({ children }) {
               {navigation.map((item) => (
                 <DisclosureButton
                   key={item.name}
-                  as="a"
-                  href={item.href}
                   aria-current={item.current ? "page" : undefined}
                   className={classNames(
                     item.current
@@ -196,9 +197,9 @@ export default function Navbar({ children }) {
                     <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
                   </button>
                 </Link>
-                <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-4 z-10 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                  3
-                </span>
+               {items.length>0 &&  <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-4 z-10 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                 {items.length}
+                </span>}
               </div>
               <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (

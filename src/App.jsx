@@ -8,8 +8,10 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import ProductList from "./features/product/components/ProductList";
 import Protected from "./features/auth/components/Protected";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoggedInUser } from "./features/auth/authSlice";
+import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
+const dispatch = useDispatch();
+const user = useSelector(selectLoggedInUser);
+if(user){
+  dispatch(fetchItemsByUserIdAsync(user.id))
+}
   return (
     <>
   <RouterProvider router={router} />
