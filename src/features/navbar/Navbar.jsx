@@ -29,29 +29,19 @@ const navigation = [
   { name: "Reports", href: "#", current: false },
 ];
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }) {
   const items = useSelector(selectProductsByUserId);
-  console.log(items)
   const userNavigation = [
-    { name: "Your Profile", link:"/" },
-    { name: "Settings",link:"/"  },
-    { name: "Sign out",link: "/login" },
+    { name: "Your Profile", link: "/profile" },
+    { name: "Settings", link: "/" },
+    { name: "Sign out", link: "/login" },
   ];
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -68,9 +58,9 @@ export default function Navbar({ children }) {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => (
+                    {navigation.map((item, index) => (
                       <a
-                        key={item.name}
+                        key={index}
                         aria-current={item.current ? "page" : undefined}
                         className={classNames(
                           item.current
@@ -100,9 +90,11 @@ export default function Navbar({ children }) {
                       />
                     </button>
                   </Link>
-                 {items.length>0 &&  <span className="inline-flex items-center z-10 rounded-md bg-red-50 px-2 py-1 text-xs mb-7 -ml-3 font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                    {items.length}
-                  </span>}
+                  {items.length > 0 && (
+                    <span className="inline-flex items-center z-10 rounded-md bg-red-50 px-2 py-1 text-xs mb-7 -ml-3 font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                      {items.length}
+                    </span>
+                  )}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -121,10 +113,10 @@ export default function Navbar({ children }) {
                       transition
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
-                      {userNavigation.map((item) => (
-                        <MenuItem key={item.name}>
-                          <Link to={item.link}
-                           
+                      {userNavigation.map((item, index) => (
+                        <MenuItem key={index}>
+                          <Link
+                            to={item.link}
                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                           >
                             {item.name}
@@ -155,9 +147,9 @@ export default function Navbar({ children }) {
 
           <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {navigation.map((item) => (
+              {navigation.map((item, index) => (
                 <DisclosureButton
-                  key={item.name}
+                  key={index}
                   aria-current={item.current ? "page" : undefined}
                   className={classNames(
                     item.current
@@ -197,19 +189,20 @@ export default function Navbar({ children }) {
                     <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
                   </button>
                 </Link>
-               {items.length>0 &&  <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-4 z-10 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                 {items.length}
-                </span>}
+                {items.length > 0 && (
+                  <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-4 z-10 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                    {items.length}
+                  </span>
+                )}
               </div>
               <div className="mt-3 space-y-1 px-2">
-                {userNavigation.map((item) => (
-                  <Link to={item.link}>
-                  <DisclosureButton
-                    key={item.name}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    {item.name}
-                  </DisclosureButton>
+                {userNavigation.map((item, index) => (
+                  <Link to={item.link} key={index}>
+                    <DisclosureButton
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    >
+                      {item.name}
+                    </DisclosureButton>
                   </Link>
                 ))}
               </div>

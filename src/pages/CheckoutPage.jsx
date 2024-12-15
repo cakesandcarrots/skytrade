@@ -1,64 +1,96 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link,Navigate} from "react-router-dom";
-import { deleteItemFromCartAsync, selectProductsByUserId, updateCartAsync } from "../features/cart/cartSlice";
+import { Link, Navigate } from "react-router-dom";
+import {
+  deleteItemFromCartAsync,
+  selectProductsByUserId,
+  updateCartAsync,
+} from "../features/cart/cartSlice";
+import { useForm } from "react-hook-form";
+import {
+  selectLoggedInUser,
+  updateUserAsync,
+} from "../features/auth/authSlice";
+import {
+  createOrderAsync,
+  selectCurrentOrder,
+} from "../features/order/orderSlice";
 
 function CheckoutPage() {
-  const addresses = [
-    {
-      name: "Rajesh Kumar",
-      street: "123 MG Road",
-      city: "Bengaluru",
-      pincode: "560001",
-      state: "Karnataka",
-      phoneno: "9876543210",
-    },
-    {
-      name: "Anjali Mehta",
-      street: "45 Park Street",
-      city: "Mumbai",
-      pincode: "400001",
-      state: "Maharashtra",
-      phoneno: "9123456789",
-    },
-    {
-      name: "Vikram Singh",
-      street: "78 Civil Lines",
-      city: "Jaipur",
-      pincode: "302006",
-      state: "Rajasthan",
-      phoneno: "9988776655",
-    },
-    {
-      name: "Priya Sharma",
-      street: "56 Nehru Avenue",
-      city: "Chennai",
-      pincode: "600034",
-      state: "Tamil Nadu",
-      phoneno: "9876543211",
-    },
-  ];
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const currentOrder = useSelector(selectCurrentOrder);
   const items = useSelector(selectProductsByUserId);
   const [open, setOpen] = useState(true);
-
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const user = useSelector(selectLoggedInUser);
   const totalAmount = items.reduce(
-    (amount, item) => item.price * item.quantity + amount,0);
+    (amount, item) => item.price * item.quantity + amount,
+    0
+  );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
+
   function handleQuantity(e, product) {
     dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
   }
   function handleDelete(e, itemId) {
     dispatch(deleteItemFromCartAsync(itemId));
   }
+
+  const handleAddress = (e) => {
+    console.log(user.addresses[e.target.value]);
+    setSelectedAddress(user.addresses[e.target.value]);
+  };
+
+  const handlePayment = (e) => {
+    setPaymentMethod(e.target.value);
+  };
+
+  const handleOrder = () => {
+    dispatch(
+      createOrderAsync({
+        user,
+        selectedAddress,
+        paymentMethod,
+        items,
+        totalAmount,
+        totalItems,
+        status: "pending",
+      })
+    );
+  };
+  console.log(currentOrder);
+
   return (
     <>
-        {items.length==0 &&  <Navigate to='/' replace="true"></Navigate>}
-
+      {items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
+      {currentOrder && (
+        <Navigate
+          to={`/order-success/${currentOrder.id}`}
+          replace="true"
+        ></Navigate>
+      )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className=" lg:col-span-3 ">
-            <form className=" bg-white px-5 mt-12">
+            <form
+              className=" bg-white px-5 mt-12"
+              onSubmit={handleSubmit((data) => {
+                dispatch(
+                  updateUserAsync({
+                    ...user,
+                    addresses: [...user.addresses, data],
+                  })
+                );
+                reset();
+              })}
+            >
               {" "}
               <div className="mx-auto py-6 max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="border-b border-gray-900/10 pb-12">
@@ -79,16 +111,16 @@ function CheckoutPage() {
                       </label>
                       <div className="mt-2">
                         <input
-                          id="first-name"
-                          name="first-name"
+                          id="name"
+                          {...register("name", {
+                            required: "Name can't be empty",
+                          })}
                           type="text"
-                          autoComplete="given-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
 
-                   
                     <div className="sm:col-span-4">
                       <label
                         htmlFor="email"
@@ -99,48 +131,44 @@ function CheckoutPage() {
                       <div className="mt-2">
                         <input
                           id="email"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
+                          {...register("email", {
+                            required: "Email can't be empty",
+                          })}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
 
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-4">
                       <label
-                        htmlFor="country"
+                        htmlFor="phone"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Country
+                        Phone
                       </label>
-                      <div className="mt-2">
-                        <select
-                          id="country"
-                          name="country"
-                          autoComplete="country-name"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                        >
-                          <option>United States</option>
-                          <option>Canada</option>
-                          <option>Mexico</option>
-                        </select>
-                      </div>
+                      <input
+                        id="phone"
+                        type="tel"
+                        {...register("phone", {
+                          required: "Phone number can't be empty",
+                        })}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
                     </div>
 
                     <div className="col-span-full">
                       <label
-                        htmlFor="street-address"
+                        htmlFor="street"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Street address
                       </label>
                       <div className="mt-2">
                         <input
-                          id="street-address"
-                          name="street-address"
-                          type="text"
-                          autoComplete="street-address"
+                          id="street"
+                          {...register("street", {
+                            required: "Street can't be empty",
+                          })}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -156,9 +184,9 @@ function CheckoutPage() {
                       <div className="mt-2">
                         <input
                           id="city"
-                          name="city"
-                          type="text"
-                          autoComplete="address-level2"
+                          {...register("city", {
+                            required: "City can't be empty",
+                          })}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -169,14 +197,14 @@ function CheckoutPage() {
                         htmlFor="region"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        State / Province
+                        State
                       </label>
                       <div className="mt-2">
                         <input
                           id="region"
-                          name="region"
-                          type="text"
-                          autoComplete="address-level1"
+                          {...register("state", {
+                            required: "State can't be empty",
+                          })}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -187,14 +215,14 @@ function CheckoutPage() {
                         htmlFor="postal-code"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        ZIP / Postal code
+                        PIN code
                       </label>
                       <div className="mt-2">
                         <input
                           id="postal-code"
-                          name="postal-code"
-                          type="text"
-                          autoComplete="postal-code"
+                          {...register("pincode", {
+                            required: "PIN code can't be empty",
+                          })}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -224,16 +252,18 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-                    {addresses.map((address) => (
+                    {user.addresses.map((address, index) => (
                       <li
                         key={address.name}
                         className="flex justify-between border-2 px-5 gap-x-6 py-5"
                       >
                         <div className="flex min-w-0 gap-x-4">
                           <input
+                            onChange={handleAddress}
                             id="address"
                             name="addresschoice"
                             type="radio"
+                            value={index}
                             className=" border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <div className="min-w-0 flex-auto">
@@ -269,8 +299,11 @@ function CheckoutPage() {
                         <div className="flex items-center gap-x-3">
                           <input
                             id="cash"
-                            name="paymentmethods"
                             type="radio"
+                            name="paymentmethods"
+                            onChange={handlePayment}
+                            checked={paymentMethod === "cash"}
+                            value="cash"
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -283,9 +316,12 @@ function CheckoutPage() {
                         <div className="flex items-center gap-x-3">
                           <input
                             id="card"
+                            value="card"
                             name="paymentmethods"
                             type="radio"
+                            checked={paymentMethod === "card"}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            onChange={handlePayment}
                           />
                           <label
                             htmlFor="push-email"
@@ -380,12 +416,12 @@ function CheckoutPage() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <Link
-                    to="/checkout"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  <div
+                    onClick={handleOrder}
+                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
-                    Checkout
-                  </Link>
+                    Order Now
+                  </div>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>

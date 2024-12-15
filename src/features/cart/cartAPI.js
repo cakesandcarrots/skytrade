@@ -32,3 +32,13 @@ export const deleteItemFromCart = async (itemId) => {
   return itemId;
 };
 
+export const resetCart = async (userId) => {
+  const cartItems = await fetchItemsByUserId(userId);
+  for (let item of cartItems){
+   await deleteItemFromCart(item.id);
+  }
+
+  return userId; 
+
+};
+

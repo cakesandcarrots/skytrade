@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addToCart, fetchItemsByUserId ,updateCart,deleteItemFromCart} from "./cartAPI";
+import { addToCart, fetchItemsByUserId ,updateCart,deleteItemFromCart,resetCart} from "./cartAPI";
 const initialState = {
     items:[],
     status:"idle"
@@ -8,7 +8,7 @@ const initialState = {
 
 export const addtoCartAsync = createAsyncThunk('card/addtoCart',async(item)=>{
     const response = await addToCart(item);
-    return response
+    return response;
 });
 
 export const fetchItemsByUserIdAsync = createAsyncThunk('card/fetchItemsByUserId',async(userId)=>{
@@ -19,16 +19,20 @@ export const fetchItemsByUserIdAsync = createAsyncThunk('card/fetchItemsByUserId
 
 export const updateCartAsync = createAsyncThunk('card/updateCart',async(updateItem)=>{
     const response = await updateCart(updateItem);
-    return response
+    return response;
 });
 
 
 export const deleteItemFromCartAsync = createAsyncThunk('card/deleteItemFromCart',async(ItemId)=>{
     const response = await deleteItemFromCart(ItemId);
-    return response
+    return response;
 });
 
-
+export const resetCartAsync = createAsyncThunk('cart/resetCart',async(userId)=>{
+    console.log(userId)
+    const response = await resetCart(userId);
+    return response
+})
 const cart = createSlice({
     name:"cart",
     initialState,
@@ -47,7 +51,6 @@ const cart = createSlice({
         })
         .addCase(fetchItemsByUserIdAsync.pending,(state)=>{
             state.status ='loading'; 
-            state.items = [];
         })
         .addCase(updateCartAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
@@ -67,8 +70,15 @@ const cart = createSlice({
             state.status ='loading'; 
           
         })
+        .addCase(resetCartAsync.fulfilled,(state,action)=>{
+            state.status = 'idle';
+            state.items = [];
+        })
+        .addCase(resetCartAsync.pending,(state)=>{
+            state.status ='loading'; 
+        })
+        
     }
 })
-
 export const selectProductsByUserId = (state)=> state.cart.items;
 export default cart.reducer;

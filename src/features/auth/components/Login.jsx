@@ -17,7 +17,6 @@ function Login() {
 
 
 
-console.log(loginError)
   return (
     <>
       {user && <Navigate to="/" replace="true"></Navigate>}
