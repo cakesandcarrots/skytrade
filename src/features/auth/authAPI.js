@@ -12,7 +12,6 @@ return data;
 
 export const checkUser = async (userData) => {
     const email = userData.email;
-  
     try {
       const response = await fetch(`http://localhost:3000/users?email=${email}`);
       const data = await response.json();
@@ -23,18 +22,8 @@ export const checkUser = async (userData) => {
   
       return data[0]; 
     } catch (error) {
-      console.error(error.message);
       return { error: 'Wrong credentials' }; 
     }
   };
   
 
-  export const updateUser = async (update) => {
-    const response = await fetch("http://localhost:3000/users/"+update.id, {
-      method: "PATCH",
-      body: JSON.stringify(update),
-      headers: { "content-type": "application/json" },
-    });
-    const data = await response.json();
-    return data;
-  };

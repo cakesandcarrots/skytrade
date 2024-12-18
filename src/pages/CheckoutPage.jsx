@@ -8,13 +8,10 @@ import {
 } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
 import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/authSlice";
-import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/order/orderSlice";
+import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
 
 function CheckoutPage() {
   const {
@@ -23,12 +20,14 @@ function CheckoutPage() {
     reset,
     formState: { errors },
   } = useForm();
+  const userInfo = useSelector(selectUserInfo)
+  console.log(userInfo)
+
   const currentOrder = useSelector(selectCurrentOrder);
   const items = useSelector(selectProductsByUserId);
   const [open, setOpen] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const user = useSelector(selectLoggedInUser);
   const totalAmount = items.reduce(
     (amount, item) => item.price * item.quantity + amount,
     0
@@ -44,8 +43,7 @@ function CheckoutPage() {
   }
 
   const handleAddress = (e) => {
-    console.log(user.addresses[e.target.value]);
-    setSelectedAddress(user.addresses[e.target.value]);
+    setSelectedAddress(userInfo.addresses[e.target.value]);
   };
 
   const handlePayment = (e) => {
@@ -55,7 +53,7 @@ function CheckoutPage() {
   const handleOrder = () => {
     dispatch(
       createOrderAsync({
-        user,
+        userInfo,
         selectedAddress,
         paymentMethod,
         items,
@@ -65,7 +63,6 @@ function CheckoutPage() {
       })
     );
   };
-  console.log(currentOrder);
 
   return (
     <>
@@ -84,8 +81,8 @@ function CheckoutPage() {
               onSubmit={handleSubmit((data) => {
                 dispatch(
                   updateUserAsync({
-                    ...user,
-                    addresses: [...user.addresses, data],
+                    ...userInfo,
+                    addresses: [...userInfo.addresses, data],
                   })
                 );
                 reset();
@@ -252,7 +249,7 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-                    {user.addresses.map((address, index) => (
+                    {userInfo.addresses.map((address, index) => (
                       <li
                         key={address.name}
                         className="flex justify-between border-2 px-5 gap-x-6 py-5"

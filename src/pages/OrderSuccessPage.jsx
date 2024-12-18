@@ -12,8 +12,7 @@ const dispatch = useDispatch()
 const user = useSelector(selectLoggedInUser)
 
   useEffect(()=>{
-    console.log(user.id)
-    dispatch(resetCartAsync(user.id))
+      dispatch(resetCartAsync(user.id))
     dispatch(resetOrder());
   },[dispatch,user])
   return (

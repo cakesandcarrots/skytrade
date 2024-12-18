@@ -5,15 +5,15 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import Navbar from "../../navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { addtoCartAsync } from "../../cart/cartSlice";
+import { selectUserInfo } from "../../user/userSlice";
 export default function ProductDetails() {
   const reviews = { href: "#", average: 4, totalCount: 117 };
 
   const product = useSelector(selectProductById);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
 
   const colors = [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
