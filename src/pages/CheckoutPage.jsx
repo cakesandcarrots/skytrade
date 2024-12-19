@@ -53,7 +53,7 @@ function CheckoutPage() {
   const handleOrder = () => {
     dispatch(
       createOrderAsync({
-        userInfo,
+        user:userInfo,
         selectedAddress,
         paymentMethod,
         items,
