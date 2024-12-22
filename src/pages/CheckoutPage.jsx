@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import {
@@ -27,6 +27,9 @@ function CheckoutPage() {
   const [open, setOpen] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [checkIndex , setCheckIndex ]= useState(0)
+  const handleSelect=(index)=>{
+  }
   const totalAmount = items.reduce(
     (amount, item) => item.price * item.quantity + amount,
     0
@@ -41,8 +44,13 @@ function CheckoutPage() {
     dispatch(deleteItemFromCartAsync(itemId));
   }
 
+  useEffect(()=>{
+    setSelectedAddress(userInfo.addresses[checkIndex]);
+
+  },[checkIndex])
   const handleAddress = (e) => {
-    setSelectedAddress(userInfo.addresses[e.target.value]);
+   
+    setCheckIndex(+e.target.value)
   };
 
   const handlePayment = (e) => {
@@ -50,16 +58,17 @@ function CheckoutPage() {
   };
 
   const handleOrder = () => {
+    const order = {
+      user:userInfo,
+      selectedAddress,
+      paymentMethod,
+      items,
+      totalAmount,
+      totalItems,
+      status: "pending",
+    }
     dispatch(
-      createOrderAsync({
-        user:userInfo,
-        selectedAddress,
-        paymentMethod,
-        items,
-        totalAmount,
-        totalItems,
-        status: "pending",
-      })
+      createOrderAsync(order)
     );
   };
 
@@ -255,11 +264,12 @@ function CheckoutPage() {
                       >
                         <div className="flex min-w-0 gap-x-4">
                           <input
-                            onChange={handleAddress}
+                            onChange={(e)=>handleAddress(e)}
                             id="address"
                             name="addresschoice"
                             type="radio"
                             value={index}
+                            checked= {checkIndex===index}
                             className=" border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <div className="min-w-0 flex-auto">
@@ -402,7 +412,7 @@ function CheckoutPage() {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex  justify-between text-base font-medium text-gray-900">
                   <p>Subtotal</p>
-                  <p>${totalAmount}</p>
+                  ${ Math.round(totalAmount* 100) / 100}
                 </div>
                 <div className="flex my-2 justify-between text-base font-medium text-gray-900">
                   <p>Total Items</p>

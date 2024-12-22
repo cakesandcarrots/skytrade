@@ -24,7 +24,7 @@ function AdminOrders() {
   };
   return (
     <>
-      {orders != null ? (
+      {orders.length!=0 ? (
         <div className="overflow-x-auto">
           <div className="min-w-screen  bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
             <div className="w-full lg:w-5/6">
@@ -68,7 +68,7 @@ function AdminOrders() {
                                 />
                               </div>
                               <span>
-                                {item.title} -#{item.quantity}-$
+                                {item.title} --#{item.quantity}--$
                                 {Math.round(
                                   item.price *
                                     (1 - item.discountPercentage / 100)

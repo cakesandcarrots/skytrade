@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom"
 import ProductDetails from "../features/product/components/ProductDetails"
+import Navbar from "../features/navbar/Navbar";
 
 function ProductDetailsPage() {
     const {id} = useParams();
   return (
-    <ProductDetails id = {id}/>
+    <Navbar><ProductDetails id = {id}/></Navbar>
   )
 }
 

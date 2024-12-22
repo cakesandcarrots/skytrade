@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createOrder, fetchAllOrders } from "./orderAPI";
 const initialState = {
-    orders:null,
+    orders:[],
     status:"idle",
     currentOrder:null,
     totalOrders:null

@@ -82,7 +82,7 @@ function Cart() {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex  justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>${totalAmount}</p>
+            ${ Math.round(totalAmount* 100) / 100}
           </div>
           <div className="flex my-2 justify-between text-base font-medium text-gray-900">
             <p>Total Items</p>

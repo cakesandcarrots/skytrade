@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
-import Navbar from "../../navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { addtoCartAsync } from "../../cart/cartSlice";
-import { selectUserInfo } from "../../user/userSlice";
-export default function ProductDetails({id}) {
-  const reviews = { href: "#", average: 4, totalCount: 117 };
+import {selectProductsByUserId} from "../../cart/cartSlice"
+export default function ProductDetails({ id }) {
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
-
+  const user = useSelector(selectProductsByUserId);
+  const cartItems = useSelector(selectProductsByUserId);
   const colors = [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
     { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
     { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
   ];
+const [presentInCart,setPresentInCart] = useState(0);
   const sizes = [
     { name: "XXS", inStock: false },
     { name: "XS", inStock: true },
@@ -39,20 +38,29 @@ export default function ProductDetails({id}) {
 
   const handleCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: 1, user: user.id };
-    delete newItem["id"];
-    dispatch(addtoCartAsync(newItem));
+    if (cartItems.findIndex((item) => {return (+product.id === item.productId)} )<0) {
+      const newItem = {
+        ...product,
+        quantity: 1,
+        user: user.id,
+        productId: +product.id,
+      };
+      delete newItem["id"];
+      dispatch(addtoCartAsync(newItem));
+    }
+    else{
+     setPresentInCart(1);
+    }
   };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   return product ? (
     <div className="bg-white">
-      <Navbar />
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol
@@ -109,7 +117,10 @@ export default function ProductDetails({id}) {
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl tracking-tight text-gray-900">
-              {product.price}
+            ${Math.round(
+                                  product.price *
+                                    (1 - product.discountPercentage / 100)
+                                )}
             </p>
 
             {/* Reviews */}
@@ -233,11 +244,11 @@ export default function ProductDetails({id}) {
                   </RadioGroup>
                 </fieldset>
               </div>
-
+{presentInCart==1 && < p className="mt-5 text-center font-bold text-red-600" >Already added to cart</p>}
               <button
                 onClick={handleCart}
                 type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Add to Cart
               </button>

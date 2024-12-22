@@ -5,13 +5,14 @@ import { fetchLoggedInUserOrdersAsync, selectUserInfo, selectUserOrders } from "
 function UserOrders() {
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchLoggedInUserOrdersAsync(user.id));
   }, []);
   const orders = useSelector(selectUserOrders);
   return (
     <>
-      {orders.map((order) => (
+      {orders.map((order) => {  return (
         <div key={order.id} className="mx-auto pb-5 bg-white max-w-4xl mt-6 px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
             <h1 className="text-4xl mt-5 font-bold tracking-tight text-gray-900">
@@ -75,7 +76,7 @@ function UserOrders() {
             <div className=" pb-4 flex min-w-0 gap-x-4">
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">
-                  {order.selectedAddress.name}
+                  {order?.selectedAddress?.name ? order.selectedAddress.name : "No Name" }
                 </p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">
                   {order.selectedAddress.phone}
@@ -93,7 +94,7 @@ function UserOrders() {
             </div>
           </div>
         </div>
-      ))}
+      )})}
     </>
   );
 }

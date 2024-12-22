@@ -305,7 +305,8 @@
       "images": [
         "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png"
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
+      "deleted": "true"
     },
     {
       "id": "6",
@@ -6338,12 +6339,12 @@
         },
         {
           "name": "Abigail Marston",
-          "email": "abi@gmail.com",
-          "phone": "987654321",
+          "email": "abigail@gmail.com",
+          "phone": "123456876",
           "street": "street",
           "city": "city",
           "state": "state",
-          "pincode": "123456"
+          "pincode": "pincode"
         }
       ],
       "role": "user",
@@ -6384,7 +6385,7 @@
   "cart": [],
   "orders": [
     {
-      "id": "3625",
+      "id": "2660",
       "user": {
         "id": "64a9",
         "email": "try@gmail.com",
@@ -6399,24 +6400,34 @@
             "pincode": "403802"
           },
           {
-            "name": "tester1",
-            "email": "test@gmail.com",
-            "phone": "12345678",
+            "name": "Jack Marston",
+            "email": "jack@gmail.com",
+            "phone": "1234567898",
             "street": "street",
             "city": "city",
             "state": "state",
             "pincode": "123456"
           },
           {
-            "name": "tester2",
-            "email": "tester@gmail.com",
-            "phone": "12345667",
+            "name": "John Marston",
+            "email": "john@gmail.com",
+            "phone": "12354598",
             "street": "street",
             "city": "city",
             "state": "state",
-            "pincode": "124567"
+            "pincode": "123456"
+          },
+          {
+            "name": "Abigail Marston",
+            "email": "abi@gmail.com",
+            "phone": "987654321",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
           }
         ],
+        "role": "user",
         "password": "try"
       },
       "selectedAddress": {
@@ -6431,13 +6442,13 @@
       "paymentMethod": "cash",
       "items": [
         {
-          "id": "4907",
+          "id": "8c94",
           "title": "Essence Mascara Lash Princess",
           "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
           "category": "beauty",
-          "price": 9.99,
+          "price": 21,
           "discountPercentage": 7.17,
-          "rating": 4.94,
+          "rating": 0,
           "stock": 5,
           "tags": [
             "beauty",
@@ -6489,142 +6500,18 @@
             "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
           ],
           "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
+          "discount": null,
+          "deleted": "true",
           "quantity": 1,
-          "user": "64a9"
-        },
-        {
-          "id": "456e",
-          "title": "Dior J'adore",
-          "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-          "category": "fragrances",
-          "price": 89.99,
-          "discountPercentage": 17.44,
-          "rating": 3.31,
-          "stock": 91,
-          "tags": [
-            "fragrances",
-            "perfumes"
-          ],
-          "brand": "Dior",
-          "sku": "E70NB03B",
-          "weight": 10,
-          "dimensions": {
-            "width": 21.51,
-            "height": 7,
-            "depth": 26.51
-          },
-          "warrantyInformation": "Lifetime warranty",
-          "shippingInformation": "Ships in 2 weeks",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Fast shipping!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Zoe Nicholson",
-              "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Excellent quality!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Addison Wright",
-              "reviewerEmail": "addison.wright@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Would buy again!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Clara Berry",
-              "reviewerEmail": "clara.berry@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "7 days return policy",
-          "minimumOrderQuantity": 8,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.619Z",
-            "updatedAt": "2024-05-23T08:56:21.619Z",
-            "barcode": "0887083199279",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
-          "quantity": 3,
-          "user": "64a9"
-        },
-        {
-          "id": "432f",
-          "title": "Powder Canister",
-          "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
-          "category": "beauty",
-          "price": 14.99,
-          "discountPercentage": 18.14,
-          "rating": 3.82,
-          "stock": 59,
-          "tags": [
-            "beauty",
-            "face powder"
-          ],
-          "brand": "Velvet Touch",
-          "sku": "9EN8WLT2",
-          "weight": 8,
-          "dimensions": {
-            "width": 24.16,
-            "height": 10.7,
-            "depth": 11.07
-          },
-          "warrantyInformation": "2 year warranty",
-          "shippingInformation": "Ships in 1-2 business days",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Very happy with my purchase!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Ethan Thompson",
-              "reviewerEmail": "ethan.thompson@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Great value for money!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Levi Hicks",
-              "reviewerEmail": "levi.hicks@x.dummyjson.com"
-            },
-            {
-              "rating": 5,
-              "comment": "Highly impressed!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Hazel Gardner",
-              "reviewerEmail": "hazel.gardner@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "60 days return policy",
-          "minimumOrderQuantity": 25,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.618Z",
-            "updatedAt": "2024-05-23T08:56:21.618Z",
-            "barcode": "0516267971277",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-          "quantity": 3,
-          "user": "64a9"
+          "productId": 1
         }
       ],
-      "totalAmount": 324.92999999999995,
-      "totalItems": 7,
+      "totalAmount": 21,
+      "totalItems": 1,
       "status": "pending"
     },
     {
-      "id": "f433",
+      "id": "7574",
       "user": {
         "id": "64a9",
         "email": "try@gmail.com",
@@ -6639,264 +6526,34 @@
             "pincode": "403802"
           },
           {
-            "name": "tester1",
-            "email": "test@gmail.com",
-            "phone": "12345678",
+            "name": "Jack Marston",
+            "email": "jack@gmail.com",
+            "phone": "1234567898",
             "street": "street",
             "city": "city",
             "state": "state",
             "pincode": "123456"
           },
           {
-            "name": "tester2",
-            "email": "tester@gmail.com",
-            "phone": "12345667",
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "pincode": "124567"
-          }
-        ],
-        "password": "try"
-      },
-      "selectedAddress": {
-        "name": "tester1",
-        "email": "test@gmail.com",
-        "phone": "12345678",
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "pincode": "123456"
-      },
-      "paymentMethod": "cash",
-      "items": [
-        {
-          "id": "b876",
-          "title": "Powder Canister",
-          "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
-          "category": "beauty",
-          "price": 14.99,
-          "discountPercentage": 18.14,
-          "rating": 3.82,
-          "stock": 59,
-          "tags": [
-            "beauty",
-            "face powder"
-          ],
-          "brand": "Velvet Touch",
-          "sku": "9EN8WLT2",
-          "weight": 8,
-          "dimensions": {
-            "width": 24.16,
-            "height": 10.7,
-            "depth": 11.07
-          },
-          "warrantyInformation": "2 year warranty",
-          "shippingInformation": "Ships in 1-2 business days",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Very happy with my purchase!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Ethan Thompson",
-              "reviewerEmail": "ethan.thompson@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Great value for money!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Levi Hicks",
-              "reviewerEmail": "levi.hicks@x.dummyjson.com"
-            },
-            {
-              "rating": 5,
-              "comment": "Highly impressed!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Hazel Gardner",
-              "reviewerEmail": "hazel.gardner@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "60 days return policy",
-          "minimumOrderQuantity": 25,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.618Z",
-            "updatedAt": "2024-05-23T08:56:21.618Z",
-            "barcode": "0516267971277",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-          "quantity": 1,
-          "user": "64a9"
-        },
-        {
-          "id": "da87",
-          "title": "Dior J'adore",
-          "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-          "category": "fragrances",
-          "price": 89.99,
-          "discountPercentage": 17.44,
-          "rating": 3.31,
-          "stock": 91,
-          "tags": [
-            "fragrances",
-            "perfumes"
-          ],
-          "brand": "Dior",
-          "sku": "E70NB03B",
-          "weight": 10,
-          "dimensions": {
-            "width": 21.51,
-            "height": 7,
-            "depth": 26.51
-          },
-          "warrantyInformation": "Lifetime warranty",
-          "shippingInformation": "Ships in 2 weeks",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Fast shipping!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Zoe Nicholson",
-              "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Excellent quality!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Addison Wright",
-              "reviewerEmail": "addison.wright@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Would buy again!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Clara Berry",
-              "reviewerEmail": "clara.berry@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "7 days return policy",
-          "minimumOrderQuantity": 8,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.619Z",
-            "updatedAt": "2024-05-23T08:56:21.619Z",
-            "barcode": "0887083199279",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
-          "quantity": 1,
-          "user": "64a9"
-        },
-        {
-          "id": "6239",
-          "title": "Red Lipstick",
-          "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
-          "category": "beauty",
-          "price": 12.99,
-          "discountPercentage": 19.03,
-          "rating": 2.51,
-          "stock": 68,
-          "tags": [
-            "beauty",
-            "lipstick"
-          ],
-          "brand": "Chic Cosmetics",
-          "sku": "O5IF1NTA",
-          "weight": 5,
-          "dimensions": {
-            "width": 14.37,
-            "height": 13.94,
-            "depth": 14.6
-          },
-          "warrantyInformation": "Lifetime warranty",
-          "shippingInformation": "Ships in 2 weeks",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Great product!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Leo Rivera",
-              "reviewerEmail": "leo.rivera@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Very pleased!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Oscar Powers",
-              "reviewerEmail": "oscar.powers@x.dummyjson.com"
-            },
-            {
-              "rating": 5,
-              "comment": "Very pleased!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Carter Rivera",
-              "reviewerEmail": "carter.rivera@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "90 days return policy",
-          "minimumOrderQuantity": 6,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.619Z",
-            "updatedAt": "2024-05-23T08:56:21.619Z",
-            "barcode": "9444582199406",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/1.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
-          "quantity": 1,
-          "user": "64a9"
-        }
-      ],
-      "totalAmount": 117.96999999999998,
-      "totalItems": 3,
-      "status": "pending"
-    },
-    {
-      "id": "a35f",
-      "user": {
-        "id": "64a9",
-        "email": "try@gmail.com",
-        "addresses": [
-          {
-            "name": "Akash Naik",
-            "email": "test@gmail.com",
-            "phone": "7028679424",
-            "street": "Vaddem",
-            "city": "Vasco",
-            "state": "Goa",
-            "pincode": "403802"
-          },
-          {
-            "name": "tester1",
-            "email": "test@gmail.com",
-            "phone": "12345678",
+            "name": "John Marston",
+            "email": "john@gmail.com",
+            "phone": "12354598",
             "street": "street",
             "city": "city",
             "state": "state",
             "pincode": "123456"
           },
           {
-            "name": "tester2",
-            "email": "tester@gmail.com",
-            "phone": "12345667",
+            "name": "Abigail Marston",
+            "email": "abi@gmail.com",
+            "phone": "987654321",
             "street": "street",
             "city": "city",
             "state": "state",
-            "pincode": "124567"
+            "pincode": "123456"
           }
         ],
+        "role": "user",
         "password": "try"
       },
       "selectedAddress": {
@@ -6908,72 +6565,136 @@
         "state": "Goa",
         "pincode": "403802"
       },
-      "paymentMethod": "card",
+      "paymentMethod": "cash",
       "items": [
         {
-          "id": "9956",
-          "title": "Powder Canister",
-          "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
+          "id": "8d46",
+          "title": "Essence Mascara Lash Princess",
+          "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
           "category": "beauty",
-          "price": 14.99,
-          "discountPercentage": 18.14,
-          "rating": 3.82,
-          "stock": 59,
+          "price": 21,
+          "discountPercentage": 7.17,
+          "rating": 0,
+          "stock": 5,
           "tags": [
             "beauty",
-            "face powder"
+            "mascara"
           ],
-          "brand": "Velvet Touch",
-          "sku": "9EN8WLT2",
-          "weight": 8,
+          "brand": "Essence",
+          "sku": "RCH45Q1A",
+          "weight": 2,
           "dimensions": {
-            "width": 24.16,
-            "height": 10.7,
-            "depth": 11.07
+            "width": 23.17,
+            "height": 14.43,
+            "depth": 28.01
           },
-          "warrantyInformation": "2 year warranty",
-          "shippingInformation": "Ships in 1-2 business days",
-          "availabilityStatus": "In Stock",
+          "warrantyInformation": "1 month warranty",
+          "shippingInformation": "Ships in 1 month",
+          "availabilityStatus": "Low Stock",
           "reviews": [
             {
-              "rating": 5,
-              "comment": "Very happy with my purchase!",
+              "rating": 2,
+              "comment": "Very unhappy with my purchase!",
               "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Ethan Thompson",
-              "reviewerEmail": "ethan.thompson@x.dummyjson.com"
+              "reviewerName": "John Doe",
+              "reviewerEmail": "john.doe@x.dummyjson.com"
             },
             {
-              "rating": 4,
-              "comment": "Great value for money!",
+              "rating": 2,
+              "comment": "Not as described!",
               "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Levi Hicks",
-              "reviewerEmail": "levi.hicks@x.dummyjson.com"
+              "reviewerName": "Nolan Gonzalez",
+              "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
             },
             {
               "rating": 5,
-              "comment": "Highly impressed!",
+              "comment": "Very satisfied!",
               "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Hazel Gardner",
-              "reviewerEmail": "hazel.gardner@x.dummyjson.com"
+              "reviewerName": "Scarlett Wright",
+              "reviewerEmail": "scarlett.wright@x.dummyjson.com"
             }
           ],
-          "returnPolicy": "60 days return policy",
-          "minimumOrderQuantity": 25,
+          "returnPolicy": "30 days return policy",
+          "minimumOrderQuantity": 24,
           "meta": {
             "createdAt": "2024-05-23T08:56:21.618Z",
             "updatedAt": "2024-05-23T08:56:21.618Z",
-            "barcode": "0516267971277",
+            "barcode": "9164035109868",
             "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
           },
           "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png"
+            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
           ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
+          "discount": null,
+          "deleted": "true",
           "quantity": 1,
-          "user": "64a9"
-        },
+          "productId": 1
+        }
+      ],
+      "totalAmount": 21,
+      "totalItems": 1,
+      "status": "pending"
+    },
+    {
+      "id": "2d59",
+      "user": {
+        "id": "64a9",
+        "email": "try@gmail.com",
+        "addresses": [
+          {
+            "name": "Akash Naik",
+            "email": "test@gmail.com",
+            "phone": "7028679424",
+            "street": "Vaddem",
+            "city": "Vasco",
+            "state": "Goa",
+            "pincode": "403802"
+          },
+          {
+            "name": "Jack Marston",
+            "email": "jack@gmail.com",
+            "phone": "1234567898",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
+          },
+          {
+            "name": "John Marston",
+            "email": "john@gmail.com",
+            "phone": "12354598",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
+          },
+          {
+            "name": "Abigail Marston",
+            "email": "abi@gmail.com",
+            "phone": "987654321",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
+          }
+        ],
+        "role": "user",
+        "password": "try"
+      },
+      "selectedAddress": {
+        "name": "Akash Naik",
+        "email": "test@gmail.com",
+        "phone": "7028679424",
+        "street": "Vaddem",
+        "city": "Vasco",
+        "state": "Goa",
+        "pincode": "403802"
+      },
+      "paymentMethod": "cash",
+      "items": [
         {
-          "id": "3c50",
+          "id": "86b6",
           "title": "Red Nail Polish",
           "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
           "category": "beauty",
@@ -7031,191 +6752,80 @@
             "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png"
           ],
           "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
-          "quantity": 2,
-          "user": "64a9"
-        }
-      ],
-      "totalAmount": 32.97,
-      "totalItems": 3,
-      "status": "pending"
-    },
-    {
-      "id": "5a6e",
-      "user": {
-        "id": "64a9",
-        "email": "try@gmail.com",
-        "addresses": [
-          {
-            "name": "Akash Naik",
-            "email": "test@gmail.com",
-            "phone": "7028679424",
-            "street": "Vaddem",
-            "city": "Vasco",
-            "state": "Goa",
-            "pincode": "403802"
-          },
-          {
-            "name": "tester1",
-            "email": "test@gmail.com",
-            "phone": "12345678",
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "pincode": "123456"
-          },
-          {
-            "name": "tester2",
-            "email": "tester@gmail.com",
-            "phone": "12345667",
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "pincode": "124567"
-          }
-        ],
-        "password": "try"
-      },
-      "selectedAddress": {
-        "name": "tester2",
-        "email": "tester@gmail.com",
-        "phone": "12345667",
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "pincode": "124567"
-      },
-      "paymentMethod": "cash",
-      "items": [
-        {
-          "id": "33cb",
-          "title": "Water",
-          "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
-          "category": "groceries",
-          "price": 0.99,
-          "discountPercentage": 13.71,
-          "rating": 2.93,
-          "stock": 95,
-          "tags": [
-            "beverages"
-          ],
-          "sku": "LZG5PPHA",
-          "weight": 2,
-          "dimensions": {
-            "width": 25.46,
-            "height": 25.86,
-            "depth": 18.06
-          },
-          "warrantyInformation": "No warranty",
-          "shippingInformation": "Ships in 1 week",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 4,
-              "comment": "Highly recommended!",
-              "date": "2024-05-23T08:56:21.621Z",
-              "reviewerName": "Lillian Simmons",
-              "reviewerEmail": "lillian.simmons@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Great product!",
-              "date": "2024-05-23T08:56:21.621Z",
-              "reviewerName": "Emily Brown",
-              "reviewerEmail": "emily.brown@x.dummyjson.com"
-            },
-            {
-              "rating": 5,
-              "comment": "Great value for money!",
-              "date": "2024-05-23T08:56:21.621Z",
-              "reviewerName": "Cameron Perez",
-              "reviewerEmail": "cameron.perez@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "7 days return policy",
-          "minimumOrderQuantity": 46,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.621Z",
-            "updatedAt": "2024-05-23T08:56:21.621Z",
-            "barcode": "7625896901250",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/groceries/Water/1.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Water/thumbnail.png",
-          "quantity": 1
+          "quantity": 1,
+          "productId": 5
         },
         {
-          "id": "9926",
-          "title": "Nike Air Jordan 1 Red And Black",
-          "description": "The Nike Air Jordan 1 in Red and Black is an iconic basketball sneaker known for its stylish design and high-performance features, making it a favorite among sneaker enthusiasts and athletes.",
-          "category": "mens-shoes",
-          "price": 149.99,
-          "discountPercentage": 15.82,
-          "rating": 2.77,
-          "stock": 15,
+          "id": "687f",
+          "title": "Chanel Coco Noir Eau De",
+          "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
+          "category": "fragrances",
+          "price": 129.99,
+          "discountPercentage": 18.64,
+          "rating": 2.76,
+          "stock": 41,
           "tags": [
-            "footwear",
-            "athletic shoes"
+            "fragrances",
+            "perfumes"
           ],
-          "brand": "Nike",
-          "sku": "84YC5J67",
-          "weight": 5,
+          "brand": "Chanel",
+          "sku": "K71HBCGS",
+          "weight": 4,
           "dimensions": {
-            "width": 19.29,
-            "height": 13.2,
-            "depth": 29.13
+            "width": 21.27,
+            "height": 28,
+            "depth": 11.89
           },
-          "warrantyInformation": "1 year warranty",
+          "warrantyInformation": "1 week warranty",
           "shippingInformation": "Ships in 1 month",
           "availabilityStatus": "In Stock",
           "reviews": [
             {
-              "rating": 2,
-              "comment": "Very unhappy with my purchase!",
-              "date": "2024-05-23T08:56:21.623Z",
-              "reviewerName": "Victoria McDonald",
-              "reviewerEmail": "victoria.mcdonald@x.dummyjson.com"
+              "rating": 1,
+              "comment": "Disappointing product!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lincoln Kelly",
+              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
             },
             {
               "rating": 4,
               "comment": "Great product!",
-              "date": "2024-05-23T08:56:21.623Z",
-              "reviewerName": "Mason Parker",
-              "reviewerEmail": "mason.parker@x.dummyjson.com"
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lincoln Kelly",
+              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
             },
             {
-              "rating": 5,
-              "comment": "Fast shipping!",
-              "date": "2024-05-23T08:56:21.623Z",
-              "reviewerName": "Avery Perez",
-              "reviewerEmail": "avery.perez@x.dummyjson.com"
+              "rating": 4,
+              "comment": "Excellent quality!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lucas Allen",
+              "reviewerEmail": "lucas.allen@x.dummyjson.com"
             }
           ],
-          "returnPolicy": "7 days return policy",
-          "minimumOrderQuantity": 2,
+          "returnPolicy": "60 days return policy",
+          "minimumOrderQuantity": 5,
           "meta": {
-            "createdAt": "2024-05-23T08:56:21.623Z",
-            "updatedAt": "2024-05-23T08:56:21.623Z",
-            "barcode": "0098559139691",
+            "createdAt": "2024-05-23T08:56:21.619Z",
+            "updatedAt": "2024-05-23T08:56:21.619Z",
+            "barcode": "1435582999795",
             "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
           },
           "images": [
-            "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/1.png",
-            "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/2.png",
-            "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/3.png",
-            "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/4.png"
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/2.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/3.png"
           ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/thumbnail.png",
-          "quantity": 2
+          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
+          "quantity": 2,
+          "productId": 7
         }
       ],
-      "totalAmount": 300.97,
+      "totalAmount": 268.97,
       "totalItems": 3,
       "status": "pending"
     },
     {
-      "id": "0efd",
+      "id": "7699",
       "user": {
         "id": "64a9",
         "email": "try@gmail.com",
@@ -7257,6 +6867,7 @@
             "pincode": "123456"
           }
         ],
+        "role": "user",
         "password": "try"
       },
       "selectedAddress": {
@@ -7268,16 +6879,16 @@
         "state": "state",
         "pincode": "123456"
       },
-      "paymentMethod": "card",
+      "paymentMethod": "cash",
       "items": [
         {
-          "id": "e090",
+          "id": "5c84",
           "title": "Essence Mascara Lash Princess",
           "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
           "category": "beauty",
-          "price": 9.99,
+          "price": 21,
           "discountPercentage": 7.17,
-          "rating": 4.94,
+          "rating": 0,
           "stock": 5,
           "tags": [
             "beauty",
@@ -7329,108 +6940,394 @@
             "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
           ],
           "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-          "quantity": 2,
-          "user": "64a9"
+          "discount": null,
+          "deleted": "true",
+          "quantity": 1,
+          "productId": 1
+        },
+        {
+          "id": "a851",
+          "title": "Dior J'adore",
+          "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
+          "category": "fragrances",
+          "price": 89.99,
+          "discountPercentage": 17.44,
+          "rating": 3.31,
+          "stock": 91,
+          "tags": [
+            "fragrances",
+            "perfumes"
+          ],
+          "brand": "Dior",
+          "sku": "E70NB03B",
+          "weight": 10,
+          "dimensions": {
+            "width": 21.51,
+            "height": 7,
+            "depth": 26.51
+          },
+          "warrantyInformation": "Lifetime warranty",
+          "shippingInformation": "Ships in 2 weeks",
+          "availabilityStatus": "In Stock",
+          "reviews": [
+            {
+              "rating": 5,
+              "comment": "Fast shipping!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Zoe Nicholson",
+              "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Excellent quality!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Addison Wright",
+              "reviewerEmail": "addison.wright@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Would buy again!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Clara Berry",
+              "reviewerEmail": "clara.berry@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "7 days return policy",
+          "minimumOrderQuantity": 8,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.619Z",
+            "updatedAt": "2024-05-23T08:56:21.619Z",
+            "barcode": "0887083199279",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
+          "quantity": 1,
+          "productId": 8
         }
       ],
-      "totalAmount": 19.98,
+      "totalAmount": 110.99,
       "totalItems": 2,
       "status": "pending"
     },
     {
-      "id": "62f5",
+      "id": "e562",
       "user": {
-        "id": "770d",
-        "email": "trial@gmail.com",
+        "id": "64a9",
+        "email": "try@gmail.com",
         "addresses": [
           {
-            "name": "Mehak Sharma",
-            "email": "mehak@gmail.com",
+            "name": "Akash Naik",
+            "email": "test@gmail.com",
+            "phone": "7028679424",
+            "street": "Vaddem",
+            "city": "Vasco",
+            "state": "Goa",
+            "pincode": "403802"
+          },
+          {
+            "name": "Jack Marston",
+            "email": "jack@gmail.com",
             "phone": "1234567898",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
+          },
+          {
+            "name": "John Marston",
+            "email": "john@gmail.com",
+            "phone": "12354598",
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "pincode": "123456"
+          },
+          {
+            "name": "Abigail Marston",
+            "email": "abi@gmail.com",
+            "phone": "987654321",
             "street": "street",
             "city": "city",
             "state": "state",
             "pincode": "123456"
           }
         ],
-        "password": "trial"
+        "role": "user",
+        "password": "try"
       },
       "selectedAddress": {
-        "name": "Mehak Sharma",
-        "email": "mehak@gmail.com",
-        "phone": "1234567898",
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "pincode": "123456"
+        "name": "Akash Naik",
+        "email": "test@gmail.com",
+        "phone": "7028679424",
+        "street": "Vaddem",
+        "city": "Vasco",
+        "state": "Goa",
+        "pincode": "403802"
       },
-      "paymentMethod": "card",
+      "paymentMethod": "cash",
       "items": [
         {
-          "id": "4cd3",
-          "title": "Eyeshadow Palette with Mirror",
-          "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+          "id": "c6f9",
+          "title": "Chanel Coco Noir Eau De",
+          "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
+          "category": "fragrances",
+          "price": 129.99,
+          "discountPercentage": 18.64,
+          "rating": 2.76,
+          "stock": 41,
+          "tags": [
+            "fragrances",
+            "perfumes"
+          ],
+          "brand": "Chanel",
+          "sku": "K71HBCGS",
+          "weight": 4,
+          "dimensions": {
+            "width": 21.27,
+            "height": 28,
+            "depth": 11.89
+          },
+          "warrantyInformation": "1 week warranty",
+          "shippingInformation": "Ships in 1 month",
+          "availabilityStatus": "In Stock",
+          "reviews": [
+            {
+              "rating": 1,
+              "comment": "Disappointing product!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lincoln Kelly",
+              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Great product!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lincoln Kelly",
+              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Excellent quality!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Lucas Allen",
+              "reviewerEmail": "lucas.allen@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "60 days return policy",
+          "minimumOrderQuantity": 5,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.619Z",
+            "updatedAt": "2024-05-23T08:56:21.619Z",
+            "barcode": "1435582999795",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/2.png",
+            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/3.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
+          "quantity": 1,
+          "productId": 7
+        },
+        {
+          "id": "520f",
+          "title": "Essence Mascara Lash Princess",
+          "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
           "category": "beauty",
-          "price": 19.99,
-          "discountPercentage": 5.5,
-          "rating": 3.28,
-          "stock": 44,
+          "price": 21,
+          "discountPercentage": 7.17,
+          "rating": 0,
+          "stock": 5,
           "tags": [
             "beauty",
-            "eyeshadow"
+            "mascara"
           ],
-          "brand": "Glamour Beauty",
-          "sku": "MVCFH27F",
-          "weight": 3,
+          "brand": "Essence",
+          "sku": "RCH45Q1A",
+          "weight": 2,
           "dimensions": {
-            "width": 12.42,
-            "height": 8.63,
-            "depth": 29.13
+            "width": 23.17,
+            "height": 14.43,
+            "depth": 28.01
+          },
+          "warrantyInformation": "1 month warranty",
+          "shippingInformation": "Ships in 1 month",
+          "availabilityStatus": "Low Stock",
+          "reviews": [
+            {
+              "rating": 2,
+              "comment": "Very unhappy with my purchase!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "John Doe",
+              "reviewerEmail": "john.doe@x.dummyjson.com"
+            },
+            {
+              "rating": 2,
+              "comment": "Not as described!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Nolan Gonzalez",
+              "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+            },
+            {
+              "rating": 5,
+              "comment": "Very satisfied!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Scarlett Wright",
+              "reviewerEmail": "scarlett.wright@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "30 days return policy",
+          "minimumOrderQuantity": 24,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.618Z",
+            "updatedAt": "2024-05-23T08:56:21.618Z",
+            "barcode": "9164035109868",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
+          "discount": null,
+          "deleted": "true",
+          "quantity": 3,
+          "productId": 1
+        },
+        {
+          "id": "f42b",
+          "title": "Red Nail Polish",
+          "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
+          "category": "beauty",
+          "price": 8.99,
+          "discountPercentage": 2.46,
+          "rating": 3.91,
+          "stock": 71,
+          "tags": [
+            "beauty",
+            "nail polish"
+          ],
+          "brand": "Nail Couture",
+          "sku": "YUIIIP4W",
+          "weight": 9,
+          "dimensions": {
+            "width": 8.11,
+            "height": 10.89,
+            "depth": 29.06
           },
           "warrantyInformation": "1 year warranty",
+          "shippingInformation": "Ships in 1 week",
+          "availabilityStatus": "In Stock",
+          "reviews": [
+            {
+              "rating": 5,
+              "comment": "Very pleased!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Leo Rivera",
+              "reviewerEmail": "leo.rivera@x.dummyjson.com"
+            },
+            {
+              "rating": 5,
+              "comment": "Great product!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Evan Reed",
+              "reviewerEmail": "evan.reed@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Highly recommended!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Evelyn Sanchez",
+              "reviewerEmail": "evelyn.sanchez@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "No return policy",
+          "minimumOrderQuantity": 46,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.619Z",
+            "updatedAt": "2024-05-23T08:56:21.619Z",
+            "barcode": "3212847902461",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
+          "quantity": 3,
+          "productId": 5
+        },
+        {
+          "id": "63b1",
+          "title": "Red Lipstick",
+          "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
+          "category": "beauty",
+          "price": 10,
+          "discountPercentage": 19.03,
+          "rating": 2.51,
+          "stock": 68,
+          "tags": [
+            "beauty",
+            "lipstick"
+          ],
+          "brand": "Chic Cosmetics",
+          "sku": "O5IF1NTA",
+          "weight": 5,
+          "dimensions": {
+            "width": 14.37,
+            "height": 13.94,
+            "depth": 14.6
+          },
+          "warrantyInformation": "Lifetime warranty",
           "shippingInformation": "Ships in 2 weeks",
           "availabilityStatus": "In Stock",
           "reviews": [
             {
-              "rating": 4,
-              "comment": "Very satisfied!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Liam Garcia",
-              "reviewerEmail": "liam.garcia@x.dummyjson.com"
+              "rating": 5,
+              "comment": "Great product!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Leo Rivera",
+              "reviewerEmail": "leo.rivera@x.dummyjson.com"
             },
             {
-              "rating": 1,
-              "comment": "Very disappointed!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Nora Russell",
-              "reviewerEmail": "nora.russell@x.dummyjson.com"
+              "rating": 4,
+              "comment": "Very pleased!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Oscar Powers",
+              "reviewerEmail": "oscar.powers@x.dummyjson.com"
             },
             {
               "rating": 5,
-              "comment": "Highly impressed!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Elena Baker",
-              "reviewerEmail": "elena.baker@x.dummyjson.com"
+              "comment": "Very pleased!",
+              "date": "2024-05-23T08:56:21.619Z",
+              "reviewerName": "Carter Rivera",
+              "reviewerEmail": "carter.rivera@x.dummyjson.com"
             }
           ],
-          "returnPolicy": "30 days return policy",
-          "minimumOrderQuantity": 32,
+          "returnPolicy": "90 days return policy",
+          "minimumOrderQuantity": 6,
           "meta": {
-            "createdAt": "2024-05-23T08:56:21.618Z",
-            "updatedAt": "2024-05-23T08:56:21.618Z",
-            "barcode": "2817839095220",
+            "createdAt": "2024-05-23T08:56:21.619Z",
+            "updatedAt": "2024-05-23T08:56:21.619Z",
+            "barcode": "9444582199406",
             "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
           },
           "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png"
+            "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/1.png"
           ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
-          "quantity": 3,
-          "user": "770d"
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
+          "deleted": "true",
+          "discount": null,
+          "quantity": 1,
+          "productId": 4
         }
       ],
-      "totalAmount": 59.97,
-      "totalItems": 3,
+      "totalAmount": 229.96,
+      "totalItems": 8,
       "status": "pending"
     }
   ]

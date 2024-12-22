@@ -48,6 +48,7 @@ export default function AdminProductForm() {
 
   const handleDelete = () => {
     const product = { ...item, deleted: "true" };
+
     dispatch(updateProductAsync(product));
   };
   return (
