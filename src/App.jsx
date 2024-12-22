@@ -3,7 +3,6 @@ import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/HomePage";
 import Cart from "./features/cart/Cart";
 import CheckoutPage from "./pages/CheckoutPage";
-import ProductDetails from "./features/product/components/ProductDetails";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,10 +15,15 @@ import DefaultPage from "./pages/DefaultPage";
 import OrderSuccesspage from "./pages/OrderSuccessPage";
 import UserOrderPage from "./pages/UserOrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import { fetchLoggedInUserAsync, selectUserInfo } from "./features/user/userSlice";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import { selectLoggedInUser } from "./features/auth/authSlice";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
+import AdminHomePage from "./pages/AdminHomePage";
+import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
+import AdminProductFormPage from "./pages/AdminProductFormPage";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +48,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/productdetails/:id",
-    element: <Protected><ProductDetails/></Protected>
+    element: <Protected><ProductDetailsPage/></Protected>
   },
   {
     path: "order-success/:id",
@@ -69,6 +73,23 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage></ForgotPasswordPage>
+  },
+  //admin routes
+  {
+    path: "/admin",
+    element: <ProtectedAdmin><AdminHomePage></AdminHomePage></ProtectedAdmin>
+  },
+  {
+    path: "/admin/productdetails/:id",
+    element: <ProtectedAdmin><AdminProductDetailsPage></AdminProductDetailsPage></ProtectedAdmin>
+  },
+  {
+    path: "/admin/productform",
+    element: <ProtectedAdmin><AdminProductFormPage></AdminProductFormPage></ProtectedAdmin>
+  },
+  {
+    path: "/admin/productform/:id",
+    element:<ProtectedAdmin><AdminProductFormPage></AdminProductFormPage></ProtectedAdmin>
   }
 
 

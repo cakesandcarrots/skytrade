@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import Navbar from "../../navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
+import { fetchProductByIdAsync, selectProductById } from "../../product/ProductSlice";
 import { addtoCartAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
-export default function ProductDetails({id}) {
-  const reviews = { href: "#", average: 4, totalCount: 117 };
+export default function AdminProductDetails() {
 
   const product = useSelector(selectProductById);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
 
@@ -47,8 +48,8 @@ export default function ProductDetails({id}) {
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
-  }, [dispatch,id]);
-
+  }, [dispatch]);
+console.log(product)
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   return product ? (
@@ -110,7 +111,7 @@ export default function ProductDetails({id}) {
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl tracking-tight text-gray-900">
-              {product.price}
+              ${product.price}
             </p>
 
             {/* Reviews */}
@@ -133,7 +134,7 @@ export default function ProductDetails({id}) {
                 </div>
                 <p className="sr-only">{product.rating} out of 5 stars</p>
                 <div className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                  {product.reviews.length} reviews
+                {product.reviews?.length ? `${product.reviews.length} reviews` : "No reviews"}
                 </div>
               </div>
             </div>

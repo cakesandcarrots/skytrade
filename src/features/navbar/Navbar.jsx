@@ -15,18 +15,15 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectProductsByUserId } from "../cart/cartSlice";
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { selectUserInfo } from "../user/userSlice";
+
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
+  { name: "Dashboard", link: "#", current: true, role: "user" },
+  { name: "Team", link: "#", current: false, role: "user" },
+  { name: "Projects", link: "#", current: false, role: "user" },
+  { name: "Calendar", link: "#", current: false, role: "user" },
+  { name: "Reports", link: "#", current: false, role: "user" },
+  { name: "Admin", link: "/admin", current: false, role: "admin" },
 ];
 
 function classNames(...classes) {
@@ -34,6 +31,8 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
+
+  const user = useSelector(selectUserInfo)
   const items = useSelector(selectProductsByUserId);
   const userNavigation = [
     { name: "My Profile", link: "/profile" },
@@ -59,7 +58,8 @@ export default function Navbar({ children }) {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item, index) => (
-                      <a
+                    user &&  item.role===user.role ? ( <Link 
+                    to = {item.link}
                         key={index}
                         aria-current={item.current ? "page" : undefined}
                         className={classNames(
@@ -70,7 +70,7 @@ export default function Navbar({ children }) {
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>) : null
                     ))}
                   </div>
                 </div>
@@ -104,7 +104,7 @@ export default function Navbar({ children }) {
                         <span className="sr-only">Open user menu</span>
                         <img
                           alt=""
-                          src={user.imageUrl}
+                          src={user?.imageUrl}
                           className="h-8 w-8 rounded-full"
                         />
                       </MenuButton>
@@ -167,16 +167,16 @@ export default function Navbar({ children }) {
                 <div className="flex-shrink-0">
                   <img
                     alt=""
-                    src={user.imageUrl}
+                    src={user?.imageUrl}
                     className="h-10 w-10 rounded-full"
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium leading-none text-white">
-                    {user.name}
+                    {user?.name}
                   </div>
                   <div className="text-sm font-medium leading-none text-gray-400">
-                    {user.email}
+                    {user?.email}
                   </div>
                 </div>
                 <Link to="/cart">
@@ -198,9 +198,7 @@ export default function Navbar({ children }) {
               <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item, index) => (
                   <Link to={item.link} key={index}>
-                    <DisclosureButton
-                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                    >
+                    <DisclosureButton className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
                       {item.name}
                     </DisclosureButton>
                   </Link>

@@ -57,6 +57,9 @@ function UserProfile() {
           <h3 className=" my-3 font-bold tracking-tight text-red-900">
             Email Address: {user.email}
           </h3>
+          <h3 className=" my-3 font-bold tracking-tight text-red-900">
+            User Role: {user.role}
+          </h3>
         </div>
         <div className="border-t border-gray-200 px-4 py-6 pb-3 sm:px-6">
           <button

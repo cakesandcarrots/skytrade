@@ -45,3 +45,24 @@ export const fetchProductById = async (id) => {
   const data = await response.json();
   return { data };
 };
+export const createProduct = async(product)=>{
+
+const response = await fetch("http://localhost:3000/products",
+  {method: "POST",
+  body: JSON.stringify(product),
+  headers: { "content-type": "application/json" }
+})
+const data = await response.json()
+console.log(data)
+return {data}; 
+}
+
+export const updateProduct = async(product)=>{
+  const response = await fetch("http://localhost:3000/products/"+product.id,
+    {method: "PATCH",
+    body: JSON.stringify(product),
+    headers: { "content-type": "application/json" }
+  })
+  const data = await  response.json()
+  return {data};
+}

@@ -6,7 +6,6 @@ function ForgotPassword() {
 
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
-  const loginError = useSelector(selectError);
   const {
     register,
     handleSubmit,

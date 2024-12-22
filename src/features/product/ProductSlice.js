@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllProducts, fetchProductsByFilters,fetchAllBrands,fetchAllCategories, fetchProductById} from "./ProductAPI";
+import { fetchAllProducts, fetchProductsByFilters,fetchAllBrands,fetchAllCategories, fetchProductById,createProduct, updateProduct} from "./ProductAPI";
 
 const initialState = {
     products: [],
@@ -49,12 +49,24 @@ export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProduc
     return response.data;
 });
   
-  
-
+  export const createProductAsync = createAsyncThunk('product/createProduct',async(product)=>{
+    console.log(product)
+    const response = await createProduct(product)
+    return response.data; 
+  })
+export const updateProductAsync = createAsyncThunk('product/updateProductAsync',async(product)=>{
+    const response = await updateProduct(product)
+    return response.data
+})
 
 export const productSlice = createSlice({
     name: 'product',
     initialState, 
+    reducers:{
+        resetProduct: (state)=>{
+            state.item = null;
+        }
+    },
     extraReducers: (builder) =>{
         builder
         .addCase(fetchAllProductsAsync.pending,(state)=>{
@@ -93,12 +105,28 @@ export const productSlice = createSlice({
         .addCase(fetchProductByIdAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
             state.item = action.payload
-        });
+        })
+        .addCase(createProductAsync.pending,(state)=>{
+            state.status ='loading';
+        })
+        .addCase(createProductAsync.fulfilled,(state,action)=>{
+            state.status = 'idle';
+            state.products.push(action.payload)
+        })
+        .addCase(updateProductAsync.pending,(state)=>{
+            state.status ='loading';
+        })
+        .addCase(updateProductAsync.fulfilled,(state,action)=>{
+            state.status = 'idle';
+            const index = state.products.findIndex(item=>item.id===action.payload.id)
+            state.products[index]= action.payload
+            state.item = action.payload
+        })
     },
 
 })
 
-
+export const {resetProduct}= productSlice.actions
 export const selectAllProducts = (state)=>state.product.products;
 export const selectItemCount = (state)=>state.product.totalitems;
 export const selectAllCategories = (state)=>state.product.categories;

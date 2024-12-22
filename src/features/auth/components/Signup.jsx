@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createUserAsync } from "../authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +40,7 @@ function Signup() {
                   email: data.email,
                   password: data.password,
                   addresses: [],
+                  role: 'user'
                 })
               );
             })}
