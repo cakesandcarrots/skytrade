@@ -18,12 +18,9 @@ import { selectProductsByUserId } from "../cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
 
 const navigation = [
-  { name: "Dashboard", link: "#", current: true, role: "user" },
-  { name: "Team", link: "#", current: false, role: "user" },
-  { name: "Projects", link: "#", current: false, role: "user" },
-  { name: "Calendar", link: "#", current: false, role: "user" },
-  { name: "Reports", link: "#", current: false, role: "user" },
-  { name: "Admin", link: "/admin", current: false, role: "admin" },
+  { name: "Products", link: "/", role: "user" },
+  { name: "Admin", link: "/admin", role: "admin" },
+  { name: "Orders", link: "/admin/orders", role: "admin" }
 ];
 
 function classNames(...classes) {
@@ -31,8 +28,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
-
-  const user = useSelector(selectUserInfo)
+  const user = useSelector(selectUserInfo);
   const items = useSelector(selectProductsByUserId);
   const userNavigation = [
     { name: "My Profile", link: "/profile" },
@@ -57,21 +53,23 @@ export default function Navbar({ children }) {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item, index) => (
-                    user &&  item.role===user.role ? ( <Link 
-                    to = {item.link}
-                        key={index}
-                        aria-current={item.current ? "page" : undefined}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                      >
-                        {item.name}
-                      </Link>) : null
-                    ))}
+                    {navigation.map((item, index) =>
+                      user && item.role === user.role ? (
+                        <Link
+                          to={item.link}
+                          key={index}
+                          aria-current={item.current ? "page" : undefined}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ) : null
+                    )}
                   </div>
                 </div>
               </div>

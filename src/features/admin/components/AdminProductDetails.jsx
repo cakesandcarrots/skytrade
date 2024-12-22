@@ -49,7 +49,6 @@ export default function AdminProductDetails() {
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
   }, [dispatch]);
-console.log(product)
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   return product ? (

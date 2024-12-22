@@ -9,7 +9,6 @@ function UserOrders() {
     dispatch(fetchLoggedInUserOrdersAsync(user.id));
   }, []);
   const orders = useSelector(selectUserOrders);
-  console.log(user.id)
   return (
     <>
       {orders.map((order) => (

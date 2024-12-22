@@ -23,7 +23,6 @@ export default function AdminProductForm() {
   } = useForm();
   const params = useParams();
   const item = useSelector(selectProductById);
-  console.log(item);
   useEffect(() => {
     if (item) {
       setValue("title", item.title);

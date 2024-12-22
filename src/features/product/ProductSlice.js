@@ -50,7 +50,6 @@ export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProduc
 });
   
   export const createProductAsync = createAsyncThunk('product/createProduct',async(product)=>{
-    console.log(product)
     const response = await createProduct(product)
     return response.data; 
   })

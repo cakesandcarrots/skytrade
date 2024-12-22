@@ -41,7 +41,6 @@ const user = createSlice({
             state.status = 'idle';
 
             state.userInfo = action.payload 
-            console.log(action.payload)           
         })
         .addCase(fetchLoggedInUserAsync.pending,(state)=>{
             state.status = 'loading';

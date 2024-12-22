@@ -8,7 +8,6 @@ import { addtoCartAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
 export default function ProductDetails({id}) {
   const reviews = { href: "#", average: 4, totalCount: 117 };
-
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
