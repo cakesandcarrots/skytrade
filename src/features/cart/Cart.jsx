@@ -1,25 +1,36 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { deleteItemFromCartAsync, selectProductsByUserId, updateCartAsync } from "./cartSlice";
-
+import {
+  deleteItemFromCartAsync,
+  selectProductsByUserId,
+  updateCartAsync,
+} from "./cartSlice";
+import Modal from "../common/Modal";
 function Cart() {
-  const items = useSelector(selectProductsByUserId)
-  const [open, setOpen] = useState(true);
-
-  const totalAmount = items.reduce((amount,item)=>item.price*item.quantity + amount , 0);
-  const totalItems = items.reduce((amount,item)=>item.quantity+amount,0);
+  const items = useSelector(selectProductsByUserId);
+  const [openModel, setOpenModel] = useState(-1);
+  const totalAmount = items.reduce(
+    (amount, item) => item.price * item.quantity + amount,
+    0
+  );
+  const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
-  function  handleQuantity(e,product){
-     dispatch(updateCartAsync({...product,quantity: +e.target.value}))
+  function handleQuantity(e, product) {
+    dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
   }
-  function handleDelete(e,itemId){
-    dispatch(deleteItemFromCartAsync(itemId))
+  function handleDelete(e, itemId) {
+    dispatch(deleteItemFromCartAsync(itemId));
+  }
+  function toggleModel(productId) {
+    if(productId===openModel)
+      setOpenModel(-1)
+    setOpenModel(productId);
   }
 
   return (
     <>
-    {items.length==0 &&  <Navigate to='/' replace="true"></Navigate>}
+      {items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
       <div className="mx-auto bg-white max-w-4xl mt-6 px-4 sm:px-6 lg:px-8">
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">
@@ -35,7 +46,14 @@ function Cart() {
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
-
+                 {openModel===product.id && <Modal
+                    dangerTitle={`Deleting -> ${product.title}`}
+                    dangerDescription={"Do you really want to delete this?"}
+                    dangerOption={"Delete"}
+                    cancelOption={"Cancel"}
+                    dangerAction={()=>handleDelete(product.id)}
+                    toggleModel = {toggleModel}
+                  ></Modal>}
                   <div className="ml-4 flex flex-1 flex-col">
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
@@ -56,7 +74,12 @@ function Cart() {
                         >
                           Quantity:
                         </label>
-                        <select onChange={(e)=>handleQuantity(e,product)} value={product.quantity} name="quantity" id="quantity">
+                        <select
+                          onChange={(e) => handleQuantity(e, product)}
+                          value={product.quantity}
+                          name="quantity"
+                          id="quantity"
+                        >
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -64,7 +87,8 @@ function Cart() {
                       </div>
 
                       <div className="flex">
-                        <button onClick={(e)=>handleDelete(e,product.id)}
+                        <button
+                          onClick={()=>toggleModel(product.id)}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
@@ -81,8 +105,7 @@ function Cart() {
 
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex  justify-between text-base font-medium text-gray-900">
-            <p>Subtotal</p>
-            ${ Math.round(totalAmount* 100) / 100}
+            <p>Subtotal</p>${Math.round(totalAmount * 100) / 100}
           </div>
           <div className="flex my-2 justify-between text-base font-medium text-gray-900">
             <p>Total Items</p>
@@ -105,7 +128,6 @@ function Cart() {
               <Link to="/">
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Continue Shopping
@@ -116,7 +138,6 @@ function Cart() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../../product/ProductSlice";
 import { addtoCartAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
+import { HashLoader } from "react-spinners";
 export default function AdminProductDetails() {
 
   const product = useSelector(selectProductById);
@@ -273,6 +274,7 @@ export default function AdminProductDetails() {
       </div>
     </div>
   ) : (
-    <>Loading</>
-  );
+<div className="flex items-center justify-center h-screen">
+      <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+    </div>  );
 }

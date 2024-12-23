@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-
+import { HashLoader } from "react-spinners";
 function UserProfile() {
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function UserProfile() {
     const newUser = { ...user, addresses: [...user.addresses] };
     newUser.addresses.push(data);
     dispatch(updateUserAsync(newUser));
-    setNewAddressPage(false)
+    setNewAddressPage(false);
   };
 
   const handleEditForm = (e, index, address) => {
@@ -235,7 +235,11 @@ function UserProfile() {
                 </div>
               </div>
             </form>
-          ) : null}
+          ) : (
+            <div className="flex items-center justify-center h-screen">
+              <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+            </div>
+          )}
           <p className="pt-4 text-md text-black-500">Your Addresses:</p>
           {user.addresses.map((address, index) => (
             <div key={index}>

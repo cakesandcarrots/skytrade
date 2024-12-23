@@ -3,10 +3,7 @@ import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/HomePage";
 import Cart from "./features/cart/Cart";
 import CheckoutPage from "./pages/CheckoutPage";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Protected from "./features/auth/components/Protected";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
@@ -25,97 +22,135 @@ import AdminHomePage from "./pages/AdminHomePage";
 import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
     path: "/signup",
-    element:<SignupPage/> ,
+    element: <SignupPage />,
   },
   {
     path: "/login",
-    element:<LoginPage/>,
+    element: <LoginPage />,
   },
   {
     path: "/",
-    element:<Protected><Homepage/></Protected>,
+    element: (
+      <Protected>
+        <Homepage />
+      </Protected>
+    ),
   },
   {
     path: "/cart",
-    element:<Protected><Cart/></Protected>,
+    element: (
+      <Protected>
+        <Cart />
+      </Protected>
+    ),
   },
   {
     path: "/checkout",
-    element:<Protected><CheckoutPage/></Protected>,
+    element: (
+      <Protected>
+        <CheckoutPage />
+      </Protected>
+    ),
   },
   {
     path: "/productdetails/:id",
-    element: <Protected><ProductDetailsPage/></Protected>
+    element: (
+      <Protected>
+        <ProductDetailsPage />
+      </Protected>
+    ),
   },
   {
     path: "order-success/:id",
-    element: <OrderSuccesspage></OrderSuccesspage>
+    element: <OrderSuccesspage></OrderSuccesspage>,
   },
   {
     path: "*",
-    element: <DefaultPage></DefaultPage>
+    element: <DefaultPage></DefaultPage>,
   },
   {
-    path:"/orders",
-    element: <UserOrderPage></UserOrderPage>
+    path: "/orders",
+    element: <UserOrderPage></UserOrderPage>,
   },
   {
     path: "/profile",
-    element: <UserProfilePage></UserProfilePage>
+    element: <UserProfilePage></UserProfilePage>,
   },
   {
     path: "/logout",
-    element: <Logout></Logout>
+    element: <Logout></Logout>,
   },
   {
     path: "/forgot-password",
-    element: <ForgotPasswordPage></ForgotPasswordPage>
+    element: <ForgotPasswordPage></ForgotPasswordPage>,
   },
   //admin routes
   {
     path: "/admin",
-    element: <ProtectedAdmin><AdminHomePage></AdminHomePage></ProtectedAdmin>
+    element: (
+      <ProtectedAdmin>
+        <AdminHomePage></AdminHomePage>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/admin/productdetails/:id",
-    element: <ProtectedAdmin><AdminProductDetailsPage></AdminProductDetailsPage></ProtectedAdmin>
+    element: (
+      <ProtectedAdmin>
+        <AdminProductDetailsPage></AdminProductDetailsPage>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/admin/productform",
-    element: <ProtectedAdmin><AdminProductFormPage></AdminProductFormPage></ProtectedAdmin>
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage></AdminProductFormPage>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/admin/productform/:id",
-    element:<ProtectedAdmin><AdminProductFormPage></AdminProductFormPage></ProtectedAdmin>
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage></AdminProductFormPage>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/admin/orders",
-    element: <ProtectedAdmin><AdminOrdersPage></AdminOrdersPage></ProtectedAdmin>
-  }
-
-
+    element: (
+      <ProtectedAdmin>
+        <AdminOrdersPage></AdminOrdersPage>
+      </ProtectedAdmin>
+    ),
+  },
 ]);
 
 function App() {
-const dispatch = useDispatch();
-const user = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
 
-useEffect(()=>{
-  if(user){
-    dispatch(fetchLoggedInUserAsync(user.id))
-    dispatch(fetchItemsByUserIdAsync(user.id))
-  }
-},[dispatch, user])
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchLoggedInUserAsync(user.id));
+      dispatch(fetchItemsByUserIdAsync(user.id));
+    }
+  }, [dispatch, user]);
 
   return (
     <>
-  <RouterProvider router={router} />
+
+      <RouterProvider router={router}/>
+      <ToastContainer limit={1}  />
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;

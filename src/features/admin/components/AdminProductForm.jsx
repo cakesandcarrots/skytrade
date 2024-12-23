@@ -10,7 +10,8 @@ import {
   updateProductAsync,
 } from "../../product/ProductSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Modal from "../../common/Modal";
 export default function AdminProductForm() {
   const dispatch = useDispatch();
   const {
@@ -36,7 +37,7 @@ export default function AdminProductForm() {
       setValue("image", item.images[0]);
       setValue("thumbnail", item.thumbnail);
     } else dispatch(fetchProductByIdAsync(params.id));
-  }, [item]);
+  }, [item,params]);
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
   const navigate = useNavigate();
@@ -45,9 +46,16 @@ export default function AdminProductForm() {
     navigate("/admin");
     dispatch(resetProduct());
   };
-
+const [openModal,setOpenModal] =useState(-1);
+const toggleModel = (productId)=>{
+if(productId===openModal)
+  setOpenModal(-1)
+else  
+setOpenModal(productId)
+}
   const handleDelete = () => {
     const product = { ...item, deleted: "true" };
+    setOpenModal(-1)
 
     dispatch(updateProductAsync(product));
   };
@@ -89,7 +97,11 @@ export default function AdminProductForm() {
     >
       <div className="space-y-12 bg-white p-6 md:p-12 rounded ">
         <div className="border-b border-gray-900/10 pb-12">
-      {  item && item.deleted=="true" &&  <p className="text-red-600 font-bold">This product has been deleted</p>}
+          {item && item.deleted == "true" && (
+            <p className="text-red-600 font-bold">
+              This product has been deleted
+            </p>
+          )}
           <h2 className="text-base/7 font-semibold text-gray-900">
             Add Product Details
           </h2>
@@ -302,10 +314,20 @@ export default function AdminProductForm() {
         >
           Cancel
         </button>
+        {item && openModal === item.id && (
+          <Modal
+            dangerTitle={`Deleting -> ${item.title}`}
+            dangerDescription={"Do you really want to delete this?"}
+            dangerOption={"Delete"}
+            cancelOption={"Cancel"}
+            dangerAction={handleDelete}
+            toggleModel={()=>toggleModel(item.id)}
+          ></Modal>
+        )}
         {item && item.deleted != "true" && (
           <button
             type="button"
-            onClick={() => handleDelete()}
+            onClick={()=>toggleModel(item.id)}
             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
             Delete

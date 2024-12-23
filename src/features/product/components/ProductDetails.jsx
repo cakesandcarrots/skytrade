@@ -4,7 +4,9 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { addtoCartAsync } from "../../cart/cartSlice";
-import {selectProductsByUserId} from "../../cart/cartSlice"
+import { selectProductsByUserId } from "../../cart/cartSlice";
+import { toast ,Bounce} from "react-toastify";
+import { HashLoader } from "react-spinners";
 export default function ProductDetails({ id }) {
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ export default function ProductDetails({ id }) {
     { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
     { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
   ];
-const [presentInCart,setPresentInCart] = useState(0);
+  const [presentInCart, setPresentInCart] = useState(0);
   const sizes = [
     { name: "XXS", inStock: false },
     { name: "XS", inStock: true },
@@ -38,7 +40,11 @@ const [presentInCart,setPresentInCart] = useState(0);
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (cartItems.findIndex((item) => {return (+product.id === item.productId)} )<0) {
+    if (
+      cartItems.findIndex((item) => {
+        return +product.id === item.productId;
+      }) < 0
+    ) {
       const newItem = {
         ...product,
         quantity: 1,
@@ -47,9 +53,30 @@ const [presentInCart,setPresentInCart] = useState(0);
       };
       delete newItem["id"];
       dispatch(addtoCartAsync(newItem));
-    }
-    else{
-     setPresentInCart(1);
+      toast.success('Item added to cart', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    } else {
+      toast.warn('Item already added', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+      setPresentInCart(1);
     }
   };
 
@@ -117,10 +144,10 @@ const [presentInCart,setPresentInCart] = useState(0);
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl tracking-tight text-gray-900">
-            ${Math.round(
-                                  product.price *
-                                    (1 - product.discountPercentage / 100)
-                                )}
+              $
+              {Math.round(
+                product.price * (1 - product.discountPercentage / 100)
+              )}
             </p>
 
             {/* Reviews */}
@@ -244,7 +271,11 @@ const [presentInCart,setPresentInCart] = useState(0);
                   </RadioGroup>
                 </fieldset>
               </div>
-{presentInCart==1 && < p className="mt-5 text-center font-bold text-red-600" >Already added to cart</p>}
+              {presentInCart == 1 && (
+                <p className="mt-5 text-center font-bold text-red-600">
+                  Already added to cart
+                </p>
+              )}
               <button
                 onClick={handleCart}
                 type="submit"
@@ -283,6 +314,8 @@ const [presentInCart,setPresentInCart] = useState(0);
       </div>
     </div>
   ) : (
-    <>Loading</>
+    <div className="flex items-center justify-center h-screen">
+    <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+  </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { HashLoader } from "react-spinners";
 import {
   fetchAllOrdersAsync,
   selectAllOrders,
@@ -105,7 +106,9 @@ function AdminOrders() {
           </div>
         </div>
       ) : (
-        <p>Loading</p>
+        <div className="flex items-center justify-center h-screen">
+      <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+    </div>
       )}
     </>
   );

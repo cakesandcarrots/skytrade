@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectProductsByUserId } from "../cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
-
+import skytrade from "../../images/skytrade.png"
 const navigation = [
   { name: "Products", link: "/", role: "user" },
   { name: "Admin", link: "/admin", role: "admin" },
@@ -45,9 +45,9 @@ export default function Navbar({ children }) {
                 <div className="flex-shrink-0">
                   <Link to="/">
                     <img
-                      alt="Your Company"
-                      src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                      className="h-8 w-8"
+                      alt="Skytrade"
+                      src={skytrade}
+                      className="h-10 w-auto"
                     />
                   </Link>
                 </div>

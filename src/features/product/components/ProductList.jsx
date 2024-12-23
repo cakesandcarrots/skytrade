@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { HashLoader } from "react-spinners";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -46,8 +47,6 @@ const sortOptions = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -421,7 +420,7 @@ function Pagination({ page, handlePage, totalItems }) {
                 length: totalPages,
               }).map((e, index) => (
                 <div
-                key= {index+1}
+                  key={index + 1}
                   onClick={(e) => handlePage(index + 1)}
                   aria-current="page"
                   className={`relative cursor-pointer z-10 inline-flex items-center ${
@@ -454,60 +453,66 @@ function Pagination({ page, handlePage, totalItems }) {
 function ProductGrid({ products }) {
   return (
     <>
-      <div className="lg:col-span-3">
-        <div className="bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-              {products.map((product) => (
-                <Link to={`/productdetails/${product.id}` }key={product.id}>
-                  <div
-                    key={product.id}
-                    className="group relative border-solid border-2 p-2 "
-                  >
-                    <div className=" min-h-60 aspect-h-1  aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
-                      <img
-                        alt={product.title}
-                        src={product.thumbnail}
-                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                      />
-                    </div>
-                    <div className="mt-4 flex justify-between">
-                      <div>
-                        <h3 className="text-sm text-gray-700">
-                          <div href={product.thumbnail}>
-                            <span
-                              aria-hidden="true"
-                              className="absolute inset-0"
-                            />
-                            {product.title}
-                          </div>
-                        </h3>
-                        <StarIcon className="h-6 w-6 inline " />
-                        <p className=" inline align-middle ml-1  mt-1 text-sm text-gray-500">
-                          {product.rating}
+      {products.length != 0 ? (
+        <div className="lg:col-span-3">
+          <div className="bg-white">
+            <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
+              <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                {products.map((product) => (
+                  <Link to={`/productdetails/${product.id}`} key={product.id}>
+                    <div
+                      key={product.id}
+                      className="group relative border-solid border-2 p-2 "
+                    >
+                      <div className=" min-h-60 aspect-h-1  aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
+                        <img
+                          alt={product.title}
+                          src={product.thumbnail}
+                          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        />
+                      </div>
+                      <div className="mt-4 flex justify-between">
+                        <div>
+                          <h3 className="text-sm text-gray-700">
+                            <div href={product.thumbnail}>
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-0"
+                              />
+                              {product.title}
+                            </div>
+                          </h3>
+                          <StarIcon className="h-6 w-6 inline " />
+                          <p className=" inline align-middle ml-1  mt-1 text-sm text-gray-500">
+                            {product.rating}
+                          </p>
+                        </div>
+                        <p className="text-sm block font-medium text-gray-900">
+                          <span className="  block">
+                            $
+                            {Math.round(
+                              product.price *
+                                (1 - product.discountPercentage / 100)
+                            )}
+                          </span>
+
+                          <span className="line-through text-gray-400 ">
+                            ${Math.round(product.price)}
+                          </span>
                         </p>
                       </div>
-                      <p className="text-sm block font-medium text-gray-900">
-                        <span className="  block">
-                          $
-                          {Math.round(
-                            product.price *
-                              (1 - product.discountPercentage / 100)
-                          )}
-                        </span>
-
-                        <span className="line-through text-gray-400 ">
-                          ${Math.round(product.price)}
-                        </span>
-                      </p>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center justify-center h-screen">
+          <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+        </div>
+      )}
     </>
   );
 }
