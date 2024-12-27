@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUserAsync, selectError, selectLoggedInUser } from "../authSlice";
+import { checkUserAsync, resetError, selectError, selectLoggedInUser } from "../authSlice";
 import skytrade from "../../../images/skytrade.png"
 
 function Login() {
@@ -17,7 +17,10 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-
+const handleInputChange=(e)=>{
+  if(loginError)
+  dispatch(resetError())
+}
 
   return (
     <>
@@ -53,6 +56,7 @@ function Login() {
               </label>
               <div className="mt-2">
                 <input
+                onKeyDown={handleInputChange}
                   id="email"
                   {...register("email", {
                     required: "Email is Required",
@@ -88,7 +92,7 @@ function Login() {
                 </div>
               </div>
               <div className="mt-2">
-                <input
+                <input onKeyDown={handleInputChange}
                   id="password"
                   {...register("password", {
                     required: "Password is required",

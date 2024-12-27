@@ -1,3 +1,5 @@
+
+//DONE
 export const createUser = async (userData) => {
   const response = await fetch("http://localhost:3000/users", {
     method: "POST",
@@ -9,21 +11,25 @@ export const createUser = async (userData) => {
 };
 
 export const checkUser = async (userData) => {
-  const email = userData.email;
   try {
-    const response = await fetch(`http://localhost:3000/users?email=${email}`);
-    const data = await response.json();
-
-    if (data.length === 0 || userData.password !== data[0].password) {
-      throw new Error("Wrong credentials");
+    const response = await fetch(`http://localhost:3000/auth`, {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: { "content-type": "application/json" },
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
     }
 
-    return data[0];
+    const data = await response.json();
+    return data;
   } catch (error) {
-    return { error: "Wrong credentials" };
+    return { error: error.message };
   }
 };
 
 export const logoutUser = async (userId) => {
-  return true;
+  const response = await fetch("http://localhost:3000/auth");
+  return response.json();
 };

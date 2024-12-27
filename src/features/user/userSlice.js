@@ -4,7 +4,7 @@ import { updateUser } from "./userAPI";
 const initialState = {
     status:'idle',
     userOrders:[],
-    userInfo: null //all info of the logged in user this will contain
+    userInfo: null,
 }
 export const fetchLoggedInUserOrdersAsync = createAsyncThunk('user/fetchLoggedInUserOrders',async(userId)=>{
     const response = await fetchLoggedInUserOrders(userId);

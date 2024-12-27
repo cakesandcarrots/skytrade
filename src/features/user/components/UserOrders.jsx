@@ -5,11 +5,11 @@ import { fetchLoggedInUserOrdersAsync, selectUserInfo, selectUserOrders } from "
 function UserOrders() {
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchLoggedInUserOrdersAsync(user.id));
   }, []);
   const orders = useSelector(selectUserOrders);
+
   return (
     <>
       {orders.map((order) => {  return (
@@ -23,11 +23,11 @@ function UserOrders() {
             </h3>
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                {order.items.map((product) => (
-                  <li key={product.id} className="flex py-6">
+                {order.items.map((item) => (
+                  <li  className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={product.images[0]}
+                        src={item.product.images[0]}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -36,18 +36,18 @@ function UserOrders() {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={product.href}>{product.title}</a>
+                            <p>{item.product.title}</p>
                           </h3>
-                          <p className="ml-4">${product.price}</p>
+                          <p className="ml-4">${item.product.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {product.brand}
+                          {item.product.brand}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className=" text-gray-500">
                           <div className="inline mr-5 text-sm font-medium leading-6 text-gray-900">
-                            Quantity:{product.quantity}
+                            Quantity:{item.quantity}
                           </div>
                         </div>
                       </div>

@@ -54,7 +54,7 @@ else
 setOpenModal(productId)
 }
   const handleDelete = () => {
-    const product = { ...item, deleted: "true" };
+    const product = { ...item, deleted: true };
     setOpenModal(-1)
 
     dispatch(updateProductAsync(product));
@@ -97,7 +97,7 @@ setOpenModal(productId)
     >
       <div className="space-y-12 bg-white p-6 md:p-12 rounded ">
         <div className="border-b border-gray-900/10 pb-12">
-          {item && item.deleted == "true" && (
+          {item && item.deleted == true && (
             <p className="text-red-600 font-bold">
               This product has been deleted
             </p>
@@ -324,7 +324,7 @@ setOpenModal(productId)
             toggleModel={()=>toggleModel(item.id)}
           ></Modal>
         )}
-        {item && item.deleted != "true" && (
+        {item && item.deleted != true && (
           <button
             type="button"
             onClick={()=>toggleModel(item.id)}

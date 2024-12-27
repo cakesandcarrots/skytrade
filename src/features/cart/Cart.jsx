@@ -11,16 +11,15 @@ function Cart() {
   const items = useSelector(selectProductsByUserId);
   const [openModel, setOpenModel] = useState(-1);
   const totalAmount = items.reduce(
-    (amount, item) => item.price * item.quantity + amount,
-    0
-  );
+    (amount, item) => item.product.price * item.quantity + amount,0);
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
   function handleQuantity(e, product) {
-    dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id:product.id, quantity: +e.target.value }));
   }
-  function handleDelete(e, itemId) {
+  function handleDelete( itemId) {
     dispatch(deleteItemFromCartAsync(itemId));
+    setOpenModel(-1)
   }
   function toggleModel(productId) {
     if(productId===openModel)
@@ -42,28 +41,28 @@ function Cart() {
                 <li key={product.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
-                      src={product.images[0]}
+                      src={product.product.images[0]}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
                  {openModel===product.id && <Modal
-                    dangerTitle={`Deleting -> ${product.title}`}
+                    dangerTitle={`Deleting -> ${product.product.title}`}
                     dangerDescription={"Do you really want to delete this?"}
                     dangerOption={"Delete"}
                     cancelOption={"Cancel"}
-                    dangerAction={()=>handleDelete(product.id)}
+                    dangerAction={()=>handleDelete(product.product.id)}
                     toggleModel = {toggleModel}
                   ></Modal>}
                   <div className="ml-4 flex flex-1 flex-col">
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <a href={product.href}>{product.title}</a>
+                          <a href={product.product.href}>{product.product.title}</a>
                         </h3>
-                        <p className="ml-4">${product.price}</p>
+                        <p className="ml-4">${product.product.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
-                        {product.brand}
+                        {product.product.brand}
                       </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
