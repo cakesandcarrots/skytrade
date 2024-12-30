@@ -1,17 +1,18 @@
-
-
-export async function fetchLoggedInUserOrders(userId) {
-  const response = await fetch(
-    "http://localhost:3000/orders?user=" + userId
-  );
-  const data = response.json();
+export async function fetchLoggedInUserOrders() {
+  const response = await fetch("http://localhost:3000/orders",{
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
   return data;
 }
-
 
 //done
 export const updateUser = async (update) => {
   const response = await fetch("http://localhost:3000/user/" + update.id, {
+    credentials: "include",
     method: "PATCH",
     body: JSON.stringify(update),
     headers: { "content-type": "application/json" },
@@ -20,10 +21,9 @@ export const updateUser = async (update) => {
   return data;
 };
 
-
 //done
-export async function fetchLoggedInUser(userId) {
-  const response = await fetch("http://localhost:3000/user?id=" + userId);
+export async function fetchLoggedInUser() {
+  const response = await fetch("http://localhost:3000/user",{credentials: "include"});
   const data = await response.json();
   return data;
 }

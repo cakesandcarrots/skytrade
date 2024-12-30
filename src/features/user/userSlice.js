@@ -6,8 +6,8 @@ const initialState = {
     userOrders:[],
     userInfo: null,
 }
-export const fetchLoggedInUserOrdersAsync = createAsyncThunk('user/fetchLoggedInUserOrders',async(userId)=>{
-    const response = await fetchLoggedInUserOrders(userId);
+export const fetchLoggedInUserOrdersAsync = createAsyncThunk('user/fetchLoggedInUserOrders',async()=>{
+    const response = await fetchLoggedInUserOrders();
     return response;
 })
 export const updateUserAsync = createAsyncThunk('user/updateUser',async(userData)=>{
@@ -16,7 +16,7 @@ export const updateUserAsync = createAsyncThunk('user/updateUser',async(userData
   })
 
   export const fetchLoggedInUserAsync = createAsyncThunk('user/fetchLoggedInUser',async(userId)=>{
-    const response = await fetchLoggedInUser(userId);
+    const response = await fetchLoggedInUser();
     return response;
 })
 

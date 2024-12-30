@@ -63,6 +63,7 @@ export const productSlice = createSlice({
     initialState, 
     reducers:{
         resetProduct: (state)=>{
+            console.log("hello")
             state.item = null;
         }
     },
@@ -119,7 +120,6 @@ export const productSlice = createSlice({
             state.status = 'idle';
             const index = state.products.findIndex(item=>item.id===action.payload.id)
             state.products[index]= action.payload
-            state.item = action.payload
         })
     },
 

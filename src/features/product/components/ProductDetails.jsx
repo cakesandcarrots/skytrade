@@ -7,11 +7,9 @@ import { addtoCartAsync } from "../../cart/cartSlice";
 import { selectProductsByUserId } from "../../cart/cartSlice";
 import { toast ,Bounce} from "react-toastify";
 import { HashLoader } from "react-spinners";
-import { selectLoggedInUser } from "../../auth/authSlice";
 export default function ProductDetails({ id }) {
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   const cartItems = useSelector(selectProductsByUserId);
   const colors = [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -48,7 +46,6 @@ export default function ProductDetails({ id }) {
     ) {
       const newItem = {
         quantity: 1,
-        user: user.id,
         product: id,
       };
       dispatch(addtoCartAsync(newItem));

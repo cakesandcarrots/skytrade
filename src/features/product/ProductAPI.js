@@ -1,7 +1,7 @@
 
 //DONE
 export const fetchAllProducts = async () => {
-  const response = await fetch("http://localhost:3000/products");
+  const response = await fetch("http://localhost:3000/products",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
@@ -25,25 +25,25 @@ export const fetchProductsByFilters = async ({ filter, sort, pagination }) => {
   }
 
   const finalUrl = "http://localhost:3000/products?" + queryString;
-  const response = await fetch(finalUrl);
+  const response = await fetch(finalUrl,{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchAllCategories = async () => {
-  const response = await fetch("http://localhost:3000/categories");
+  const response = await fetch("http://localhost:3000/categories",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchAllBrands = async () => {
-  const response = await fetch("http://localhost:3000/brands");
+  const response = await fetch("http://localhost:3000/brands",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchProductById = async (id) => {
-  const response = await fetch("http://localhost:3000/products/" + id);
+  const response = await fetch("http://localhost:3000/products/" + id,{credentials:"include"});
   const data = await response.json();
   return { data };
 };
@@ -52,6 +52,7 @@ export const createProduct = async(product)=>{
 const response = await fetch("http://localhost:3000/products",
   {method: "POST",
   body: JSON.stringify(product),
+  credentials:"include",
   headers: { "content-type": "application/json" }
 })
 const data = await response.json()
@@ -61,6 +62,7 @@ return {data};
 export const updateProduct = async(product)=>{
   const response = await fetch("http://localhost:3000/products/"+product.id,
     {method: "PATCH",
+      credentials:"include",
     body: JSON.stringify(product),
     headers: { "content-type": "application/json" }
   })

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllBrandsAsync,
   fetchAllCategoriesAsync,
+  fetchProductByIdAsync,
   fetchProductsByFiltersAsync,
   selectAllBrands,
   selectAllCategories,
@@ -74,6 +75,7 @@ useEffect(()=>{
  
 })
   const handleEdit = (id) => {
+    dispatch(fetchProductByIdAsync(id))
     navigate(`/admin/productform/${id}`);
   };
   const handleSort = (e, option) => {

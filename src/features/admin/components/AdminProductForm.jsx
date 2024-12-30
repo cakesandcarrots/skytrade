@@ -36,29 +36,29 @@ export default function AdminProductForm() {
       setValue("brand", item.brand);
       setValue("image", item.images[0]);
       setValue("thumbnail", item.thumbnail);
-    } else dispatch(fetchProductByIdAsync(params.id));
-  }, [item,params]);
+    } else if (params && params.id) dispatch(fetchProductByIdAsync(params.id));
+  }, [item, params]);
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
   const navigate = useNavigate();
   const handleCancel = () => {
     reset();
-    navigate("/admin");
     dispatch(resetProduct());
+    navigate("/admin");
   };
-const [openModal,setOpenModal] =useState(-1);
-const toggleModel = (productId)=>{
-if(productId===openModal)
-  setOpenModal(-1)
-else  
-setOpenModal(productId)
-}
+  const [openModal, setOpenModal] = useState(-1);
+  const toggleModel = (productId) => {
+    if (productId === openModal) setOpenModal(-1);
+    else setOpenModal(productId);
+  };
   const handleDelete = () => {
     const product = { ...item, deleted: true };
-    setOpenModal(-1)
+    setOpenModal(-1);
 
     dispatch(updateProductAsync(product));
   };
+
+
   return (
     // {
     //   "id": "1", done
@@ -76,7 +76,7 @@ setOpenModal(productId)
     //   "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png" done
     // }
     <form
-      onSubmit={handleSubmit((data) => {
+      onSubmit={handleSubmit (async(data) => {
         const product = { ...data, rating: 0 };
         product.price = +product.price;
         product.discount = parseFloat(product.discount);
@@ -86,11 +86,11 @@ setOpenModal(productId)
         if (params.id) {
           product.id = item.id;
           product.rating = item.rating;
-          dispatch(updateProductAsync(product));
-          dispatch(resetProduct());
+          await dispatch(updateProductAsync(product));
         } else {
-          dispatch(createProductAsync(product));
+         await   dispatch(createProductAsync(product));
         }
+        await dispatch(resetProduct());
         reset();
         navigate("/admin");
       })}
@@ -321,13 +321,13 @@ setOpenModal(productId)
             dangerOption={"Delete"}
             cancelOption={"Cancel"}
             dangerAction={handleDelete}
-            toggleModel={()=>toggleModel(item.id)}
+            toggleModel={() => toggleModel(item.id)}
           ></Modal>
         )}
         {item && item.deleted != true && (
           <button
             type="button"
-            onClick={()=>toggleModel(item.id)}
+            onClick={() => toggleModel(item.id)}
             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
             Delete

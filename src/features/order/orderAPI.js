@@ -2,6 +2,7 @@ export const createOrder = async (order) => {
   const response = await fetch("http://localhost:3000/orders", {
     method: "POST",
     body: JSON.stringify(order),
+    credentials:"include",
     headers: { "content-type": "application/json" },
   });
   return response.json();
@@ -16,7 +17,7 @@ export const fetchAllOrders = async ({ sort, pagination }) => {
     queryString += `_sort=${sort}&`;
   }
   const finalUrl = "http://localhost:3000/orders/all?" + queryString;
-  const response = await fetch(finalUrl);
+  const response = await fetch(finalUrl,{credentials:"include"});
   const data = await response.json();
   return data;
 };

@@ -257,7 +257,7 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-                    {userInfo.addresses.map((address, index) => (
+                    {userInfo.addresses.map((address, index) =>    {console.log(address); return (
                       <li
                         key={address.name}
                         className="flex justify-between border-2 px-5 gap-x-6 py-5"
@@ -277,7 +277,7 @@ function CheckoutPage() {
                               {address.name}
                             </p>
                             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              {address.phoneno}
+                              {address.phone}
                             </p>
                           </div>
                         </div>
@@ -290,7 +290,7 @@ function CheckoutPage() {
                           </p>
                         </div>
                       </li>
-                    ))}
+                    )})}
                   </ul>
 
                   <div className="mt-10 space-y-10">

@@ -1,9 +1,10 @@
 
 //DONE
 export const createUser = async (userData) => {
-  const response = await fetch("http://localhost:3000/users", {
+  const response = await fetch("http://localhost:3000/user", {
     method: "POST",
     body: JSON.stringify(userData),
+    credentials:"include",
     headers: { "content-type": "application/json" },
   });
   const data = await response.json();
@@ -15,6 +16,7 @@ export const checkUser = async (userData) => {
     const response = await fetch(`http://localhost:3000/auth`, {
       method: "POST",
       body: JSON.stringify(userData),
+      credentials: "include",
       headers: { "content-type": "application/json" },
     });
     if (!response.ok) {
@@ -29,7 +31,9 @@ export const checkUser = async (userData) => {
   }
 };
 
-export const logoutUser = async (userId) => {
-  const response = await fetch("http://localhost:3000/auth");
+export const logoutUser = async () => {
+  const response = await fetch("http://localhost:3000/auth",{credentials:"include"});
   return response.json();
 };
+
+

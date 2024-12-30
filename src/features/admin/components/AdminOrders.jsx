@@ -13,6 +13,7 @@ function AdminOrders() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [toggle, setToggle] = useState(0);
+  console.log(orders)
   useEffect(() => {
     const pagination = { _page: page, _per_page: ITEMS_PER_PAGE };
     const sort = toggle == 1 ? "totalAmount" : "-totalAmount";
@@ -28,7 +29,7 @@ function AdminOrders() {
       {orders.length!=0 ? (
         <div className="overflow-x-auto">
           <div className="min-w-screen  bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
-            <div className="w-full lg:w-5/6">
+            <div className="w-full ">
               <div className="bg-white shadow-md rounded my-6">
                 <table className="min-w-max w-full table-auto">
                   <thead>
@@ -37,7 +38,7 @@ function AdminOrders() {
                       <th  className="py-3 px-6 text-left">
                         Items
                       </th>
-                      <th onClick={handleSort} className="py-3 px-6 text-center">
+                      <th onClick={handleSort} className="py-3 px-6 text-center cursor-pointer ">
                         Total Amount{" "}
                         {toggle == 1 ? (
                           <ArrowDownIcon className="inline w-4 h-4"></ArrowDownIcon>
@@ -65,14 +66,14 @@ function AdminOrders() {
                               <div className="mr-2">
                                 <img
                                   className="w-6 h-6 rounded-full"
-                                  src={item.images[0]}
+                                  src={item.product.images[0]}
                                 />
                               </div>
                               <span>
-                                {item.title} --#{item.quantity}--$
+                                {item.product.title} --#{item.quantity}--$
                                 {Math.round(
-                                  item.price *
-                                    (1 - item.discountPercentage / 100)
+                                  item.product.price *
+                                    (1 - item.product.discountPercentage / 100)
                                 )}
                               </span>
                             </div>

@@ -5,8 +5,9 @@ import { fetchLoggedInUserOrdersAsync, selectUserInfo, selectUserOrders } from "
 function UserOrders() {
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();
+  console.log()
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(user.id));
+    dispatch(fetchLoggedInUserOrdersAsync());
   }, []);
   const orders = useSelector(selectUserOrders);
 
