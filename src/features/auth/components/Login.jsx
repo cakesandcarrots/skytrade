@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUserAsync, resetError, selectError, selectLoggedInUser } from "../authSlice";
+import { loginAsync, resetError, selectError, selectLoggedInUser } from "../authSlice";
 import skytrade from "../../../images/skytrade.png"
 
 function Login() {
@@ -44,7 +44,7 @@ const handleInputChange=(e)=>{
             noValidate
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
-              dispatch(checkUserAsync(data));
+              dispatch(loginAsync(data));
             })}
           >
             <div>

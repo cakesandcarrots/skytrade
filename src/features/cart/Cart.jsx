@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
+  selectCartLoaded,
   selectProductsByUserId,
   updateCartAsync,
 } from "./cartSlice";
 import Modal from "../common/Modal";
 function Cart() {
   const items = useSelector(selectProductsByUserId);
+  const cartLoaded = useSelector(selectCartLoaded)
   const [openModel, setOpenModel] = useState(-1);
   const totalAmount = items.reduce(
     (amount, item) => item.product.price * item.quantity + amount,0);
@@ -29,7 +31,7 @@ function Cart() {
 
   return (
     <>
-      {items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
+      {cartLoaded &&   items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
       <div className="mx-auto bg-white max-w-4xl mt-6 px-4 sm:px-6 lg:px-8">
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">

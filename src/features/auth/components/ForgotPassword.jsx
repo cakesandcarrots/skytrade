@@ -1,7 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUserAsync, selectLoggedInUser } from "../authSlice";
+import { loginAsync, selectLoggedInUser } from "../authSlice";
 import skytrade from "../../../images/skytrade.png"
 
 function ForgotPassword() {
@@ -38,7 +38,7 @@ Enter your email
             noValidate
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
-              dispatch(checkUserAsync(data));
+              dispatch(loginAsync(data));
             })}
           >
             <div>

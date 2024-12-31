@@ -13,7 +13,11 @@ import OrderSuccesspage from "./pages/OrderSuccessPage";
 import UserOrderPage from "./pages/UserOrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
-import { selectLoggedInUser } from "./features/auth/authSlice";
+import {
+  checkAuthAsync,
+  selectLoggedInUser,
+  selectUserChecked,
+} from "./features/auth/authSlice";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
@@ -135,6 +139,11 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
+  const userChecked = useSelector(selectUserChecked);
+  useEffect(() => {
+    console.log("check");
+    dispatch(checkAuthAsync());
+  }, []);
   useEffect(() => {
     if (user) {
       dispatch(fetchLoggedInUserAsync());
@@ -144,10 +153,12 @@ function App() {
 
   return (
     <>
-
-      <RouterProvider router={router}/>
-      <ToastContainer limit={1}  />
-
+      {userChecked && (
+        <>
+          <RouterProvider router={router} />
+          <ToastContainer limit={1} />
+        </>
+      )}
     </>
   );
 }

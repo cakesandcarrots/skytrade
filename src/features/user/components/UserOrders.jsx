@@ -13,7 +13,7 @@ function UserOrders() {
 
   return (
     <>
-      {orders.map((order) => {  return (
+      {orders ? orders.map((order) => {  return (
         <div key={order.id} className="mx-auto pb-5 bg-white max-w-4xl mt-6 px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
             <h1 className="text-4xl mt-5 font-bold tracking-tight text-gray-900">
@@ -95,7 +95,9 @@ function UserOrders() {
             </div>
           </div>
         </div>
-      )})}
+      )}): <div className="flex items-center justify-center h-screen">
+      <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+    </div>}
     </>
   );
 }

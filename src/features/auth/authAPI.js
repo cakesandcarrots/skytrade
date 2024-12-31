@@ -1,17 +1,16 @@
-
 //DONE
 export const createUser = async (userData) => {
   const response = await fetch("http://localhost:3000/user", {
     method: "POST",
     body: JSON.stringify(userData),
-    credentials:"include",
+    credentials: "include",
     headers: { "content-type": "application/json" },
   });
   const data = await response.json();
   return data;
 };
 
-export const checkUser = async (userData) => {
+export const login = async (userData) => {
   try {
     const response = await fetch(`http://localhost:3000/auth`, {
       method: "POST",
@@ -32,8 +31,17 @@ export const checkUser = async (userData) => {
 };
 
 export const logoutUser = async () => {
-  const response = await fetch("http://localhost:3000/auth",{credentials:"include"});
+  const response = await fetch("http://localhost:3000/auth", {
+    credentials: "include",
+  });
   return response.json();
 };
 
-
+export const checkAuth = async () => {
+  const response = await fetch("http://localhost:3000/auth/check",{credentials:"include"});
+  if (!response.ok) {
+    throw new Error("Failed to authenticate");
+  }
+  const data = await response.json();
+  return data
+};
