@@ -11,13 +11,15 @@ export const createUser = async (userData) => {
 };
 
 export const login = async (userData) => {
+  console.log(userData)
   try {
-    const response = await fetch(`http://localhost:3000/auth`, {
+    const response = await fetch("http://localhost:3000/auth", {
       method: "POST",
       body: JSON.stringify(userData),
       credentials: "include",
       headers: { "content-type": "application/json" },
     });
+    console.log(response)
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message);

@@ -20,37 +20,33 @@ function CheckoutPage() {
     reset,
     formState: { errors },
   } = useForm();
-  const userInfo = useSelector(selectUserInfo)
+  const userInfo = useSelector(selectUserInfo);
 
   const currentOrder = useSelector(selectCurrentOrder);
   const items = useSelector(selectProductsByUserId);
   const [open, setOpen] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const [checkIndex , setCheckIndex ]= useState(0)
-  const handleSelect=(index)=>{
-  }
+  const [checkIndex, setCheckIndex] = useState(0);
+  const handleSelect = (index) => {};
   const totalAmount = items.reduce(
     (amount, item) => item.product.price * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
-
   function handleQuantity(e, product) {
-    dispatch(updateCartAsync({ id: product.id, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id: product.product.id, quantity: +e.target.value }));
   }
   function handleDelete(e, itemId) {
     dispatch(deleteItemFromCartAsync(itemId));
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedAddress(userInfo.addresses[checkIndex]);
-
-  },[checkIndex])
+  }, [checkIndex]);
   const handleAddress = (e) => {
-   
-    setCheckIndex(+e.target.value)
+    setCheckIndex(+e.target.value);
   };
 
   const handlePayment = (e) => {
@@ -59,28 +55,37 @@ function CheckoutPage() {
 
   const handleOrder = () => {
     const order = {
-      user:userInfo,
+      user: userInfo,
       selectedAddress,
       paymentMethod,
       items,
       totalAmount,
       totalItems,
       status: "pending",
-    }
-    dispatch(
-      createOrderAsync(order)
-    );
+    };
+    dispatch(createOrderAsync(order));
   };
 
   return (
     <>
       {items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
-      {currentOrder && (
-        <Navigate
-          to={`/order-success/${currentOrder.id}`}
-          replace="true"
-        ></Navigate>
-      )}
+      {currentOrder &&
+        currentOrder.paymentMethod ==
+          "cash" && 
+            <Navigate
+              to={`/order-success/${currentOrder.id}`}
+              replace="true"
+            ></Navigate>
+          }
+      {currentOrder &&
+        currentOrder.paymentMethod ==
+          "card" && 
+            <Navigate
+              to={`/stripe-checkout`}
+              replace="true"
+            ></Navigate>
+          }
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className=" lg:col-span-3 ">
@@ -257,40 +262,42 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-                    {userInfo.addresses.map((address, index) =>    {console.log(address); return (
-                      <li
-                        key={address.name}
-                        className="flex justify-between border-2 px-5 gap-x-6 py-5"
-                      >
-                        <div className="flex min-w-0 gap-x-4">
-                          <input
-                            onChange={(e)=>handleAddress(e)}
-                            id="address"
-                            name="addresschoice"
-                            type="radio"
-                            value={index}
-                            checked= {checkIndex===index}
-                            className=" border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          />
-                          <div className="min-w-0 flex-auto">
-                            <p className="text-sm font-semibold leading-6 text-gray-900">
-                              {address.name}
+                    {userInfo.addresses.map((address, index) => {
+                      return (
+                        <li
+                          key={address.name}
+                          className="flex justify-between border-2 px-5 gap-x-6 py-5"
+                        >
+                          <div className="flex min-w-0 gap-x-4">
+                            <input
+                              onChange={(e) => handleAddress(e)}
+                              id="address"
+                              name="addresschoice"
+                              type="radio"
+                              value={index}
+                              checked={checkIndex === index}
+                              className=" border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            />
+                            <div className="min-w-0 flex-auto">
+                              <p className="text-sm font-semibold leading-6 text-gray-900">
+                                {address.name}
+                              </p>
+                              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                {address.phone}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                            <p className="text-sm leading-6 text-gray-900">
+                              {address.street},{address.city},{address.state}
                             </p>
-                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              {address.phone}
+                            <p className="text-xs leading-5 text-gray-500">
+                              {address.pincode}
                             </p>
                           </div>
-                        </div>
-                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                          <p className="text-sm leading-6 text-gray-900">
-                            {address.street},{address.city},{address.state}
-                          </p>
-                          <p className="text-xs leading-5 text-gray-500">
-                            {address.pincode}
-                          </p>
-                        </div>
-                      </li>
-                    )})}
+                        </li>
+                      );
+                    })}
                   </ul>
 
                   <div className="mt-10 space-y-10">
@@ -364,7 +371,9 @@ function CheckoutPage() {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={product.product.href}>{product.product.title}</a>
+                                <a href={product.product.href}>
+                                  {product.product.title}
+                                </a>
                               </h3>
                               <p className="ml-4">${product.product.price}</p>
                             </div>
@@ -411,8 +420,7 @@ function CheckoutPage() {
 
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex  justify-between text-base font-medium text-gray-900">
-                  <p>Subtotal</p>
-                  ${ Math.round(totalAmount* 100) / 100}
+                  <p>Subtotal</p>${Math.round(totalAmount * 100) / 100}
                 </div>
                 <div className="flex my-2 justify-between text-base font-medium text-gray-900">
                   <p>Total Items</p>

@@ -13,7 +13,6 @@ function AdminOrders() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [toggle, setToggle] = useState(0);
-  console.log(orders)
   useEffect(() => {
     const pagination = { _page: page, _per_page: ITEMS_PER_PAGE };
     const sort = toggle == 1 ? "totalAmount" : "-totalAmount";

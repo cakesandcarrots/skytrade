@@ -63,7 +63,6 @@ export const productSlice = createSlice({
     initialState, 
     reducers:{
         resetProduct: (state)=>{
-            console.log("hello")
             state.item = null;
         }
     },

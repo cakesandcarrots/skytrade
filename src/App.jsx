@@ -27,6 +27,7 @@ import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import { ToastContainer } from "react-toastify";
+import StripeCheckout from "./pages/StripeCheckout";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "order-success/:id",
+    path: "/order-success/:id",
     element: <OrderSuccesspage></OrderSuccesspage>,
   },
   {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage></ForgotPasswordPage>,
+  },
+  {
+    path: "/stripe-checkout",
+    element : <Protected><StripeCheckout></StripeCheckout></Protected>
   },
   //admin routes
   {
@@ -141,7 +146,6 @@ function App() {
   const user = useSelector(selectLoggedInUser);
   const userChecked = useSelector(selectUserChecked);
   useEffect(() => {
-    console.log("check");
     dispatch(checkAuthAsync());
   }, []);
   useEffect(() => {

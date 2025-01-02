@@ -17,7 +17,7 @@ function Cart() {
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
   function handleQuantity(e, product) {
-    dispatch(updateCartAsync({ id:product.id, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id:product.product.id, quantity: +e.target.value }));
   }
   function handleDelete( itemId) {
     dispatch(deleteItemFromCartAsync(itemId));
