@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAsync, resetError, selectError, selectLoggedInUser } from "../authSlice";
-import skytrade from "../../../images/skytrade.png"
+import {
+  loginAsync,
+  resetError,
+  selectError,
+  selectLoggedInUser,
+  selectPasswordReset,
+  togglePasswordReset,
+} from "../authSlice";
+import skytrade from "../../../images/skytrade.png";
+import { toast, Bounce } from "react-toastify";
 
 function Login() {
-
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
   const loginError = useSelector(selectError);
@@ -16,24 +23,37 @@ function Login() {
     watch,
     formState: { errors },
   } = useForm();
-
-const handleInputChange=(e)=>{
-  if(loginError)
-  dispatch(resetError())
-}
+  const passwordReset = useSelector(selectPasswordReset);
+  useEffect(()=>{
+    if (passwordReset) {
+      toast.success("Password has been reset", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        onClose: ()=>{
+          dispatch(togglePasswordReset())
+        }
+      });
+    }
+  },[passwordReset])
+  
+  const handleInputChange = (e) => {
+    if (loginError) dispatch(resetError());
+  };
 
   return (
     <>
+      {user && <Navigate to="/" replace="true"></Navigate>}
 
-      {user  && <Navigate to="/" replace="true"></Navigate>}
-
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+     {!passwordReset &&  <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Skytrade"
-            src={skytrade}
-            className="mx-auto h-16 w-auto"
-          />
+          <img alt="Skytrade" src={skytrade} className="mx-auto h-16 w-auto" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Log in to your account
           </h2>
@@ -56,7 +76,7 @@ const handleInputChange=(e)=>{
               </label>
               <div className="mt-2">
                 <input
-                onKeyDown={handleInputChange}
+                  onKeyDown={handleInputChange}
                   id="email"
                   {...register("email", {
                     required: "Email is Required",
@@ -70,7 +90,6 @@ const handleInputChange=(e)=>{
                 {errors.email && (
                   <p className="text-red-600">{errors.email.message}</p>
                 )}
-                
               </div>
             </div>
 
@@ -92,7 +111,8 @@ const handleInputChange=(e)=>{
                 </div>
               </div>
               <div className="mt-2">
-                <input onKeyDown={handleInputChange}
+                <input
+                  onKeyDown={handleInputChange}
                   id="password"
                   {...register("password", {
                     required: "Password is required",
@@ -102,7 +122,7 @@ const handleInputChange=(e)=>{
                 {errors.password && (
                   <p className="text-red-600">{errors.password.message}</p>
                 )}
-                 {loginError && !errors.password &&  (
+                {loginError && !errors.password && (
                   <p className="text-red-600">{loginError}</p>
                 )}
               </div>
@@ -128,7 +148,7 @@ const handleInputChange=(e)=>{
             </Link>
           </p>
         </div>
-      </div>
+      </div>}
     </>
   );
 }

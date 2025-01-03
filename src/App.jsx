@@ -28,6 +28,7 @@ import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import { ToastContainer } from "react-toastify";
 import StripeCheckout from "./pages/StripeCheckout";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
   {
     path: "/stripe-checkout",
     element : <Protected><StripeCheckout></StripeCheckout></Protected>
+  },
+  {
+    path: "/auth/reset-password",
+    element: <ResetPasswordPage></ResetPasswordPage>
   },
   //admin routes
   {

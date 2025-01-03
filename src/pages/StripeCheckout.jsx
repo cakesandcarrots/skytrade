@@ -24,7 +24,6 @@ export default function StripCheckout() {
 
 
   }, []);
-console.log(clientSecret)
   const appearance = { theme: "stripe" };
   const loader = "auto";
 

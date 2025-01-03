@@ -11,7 +11,6 @@ export const createUser = async (userData) => {
 };
 
 export const login = async (userData) => {
-  console.log(userData)
   try {
     const response = await fetch("http://localhost:3000/auth", {
       method: "POST",
@@ -19,13 +18,15 @@ export const login = async (userData) => {
       credentials: "include",
       headers: { "content-type": "application/json" },
     });
-    console.log(response)
+
+    const data  =await response.json()
+
     if (!response.ok) {
+
       const error = await response.json();
       throw new Error(error.message);
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     return { error: error.message };
@@ -46,4 +47,44 @@ export const checkAuth = async () => {
   }
   const data = await response.json();
   return data
+};
+
+
+export const resetPasswordRequest = async (email) => {
+  const response = await fetch(
+    "http://localhost:3000/auth/reset-password-request",
+    {
+      method: "POST",
+      body: JSON.stringify({ email: email }),
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (!response.ok) {
+    return { success: false, message: "Failed to find an account" };
+  }
+
+  const data = await response.json();
+  return { success: true, data };
+};
+
+
+export const resetPassword = async ({email,token, password}) => {
+  const response = await fetch(
+    "http://localhost:3000/auth/reset-password",
+    {
+      method: "POST",
+      body: JSON.stringify({email,token, password}),
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (!response.ok) {
+    return { success: false, message: "Failed to find an account" };
+  }
+
+  const data = await response.json();
+  return { success: true, data };
 };
