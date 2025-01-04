@@ -7,7 +7,9 @@ const initialState = {
     status: 'idle',
     categories: [],
     brands: [],
-    item: null
+    item: null,
+    itemFetched: false
+  
 };
 
 export const fetchAllProductsAsync = createAsyncThunk('product/fetchAllProducts',async()=>{
@@ -64,6 +66,11 @@ export const productSlice = createSlice({
     reducers:{
         resetProduct: (state)=>{
             state.item = null;
+            state.itemFetched = false;
+
+        } ,
+        setItemFetched: (state)=>{
+            state.itemFetched = true;
         }
     },
     extraReducers: (builder) =>{
@@ -100,10 +107,13 @@ export const productSlice = createSlice({
         .addCase(fetchProductByIdAsync.pending,(state)=>{
             state.status ='loading';
             state.item = null
+            state.itemFetched  =false
+
         })
         .addCase(fetchProductByIdAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
             state.item = action.payload
+            state.itemFetched  =true
         })
         .addCase(createProductAsync.pending,(state)=>{
             state.status ='loading';
@@ -125,9 +135,11 @@ export const productSlice = createSlice({
 })
 
 export const {resetProduct}= productSlice.actions
+export const {setItemFetched} = productSlice.actions
 export const selectAllProducts = (state)=>state.product.products;
 export const selectItemCount = (state)=>state.product.totalitems;
 export const selectAllCategories = (state)=>state.product.categories;
 export const selectAllBrands = (state)=>state.product.brands;
 export const selectProductById = (state)=>state.product.item
+export const selectItemFetchedStatus = (state)=>state.product.itemFetched
 export default productSlice.reducer;

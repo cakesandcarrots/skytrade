@@ -31,11 +31,12 @@ export default function ProductDetails({ id }) {
     return classes.filter(Boolean).join(" ");
   }
   const highlights = [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
+    "Exclusive handcrafted quality for every product.",
+    "Made with premium materials for unmatched durability.",
+    "Customer satisfaction guaranteed with hassle-free returns.",
+    "Unique designs to help you stand out effortlessly.",
   ];
+  
 
   const handleCart = (e) => {
     e.preventDefault();
@@ -173,7 +174,7 @@ export default function ProductDetails({ id }) {
 
             <form className="mt-10">
               {/* Colors */}
-              <div>
+             {product.colors && product.colors.length>0 &&  <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
                 <fieldset aria-label="Choose a color" className="mt-4">
@@ -182,7 +183,7 @@ export default function ProductDetails({ id }) {
                     onChange={setSelectedColor}
                     className="flex items-center space-x-3"
                   >
-                    {colors.map((color) => (
+                    {product && product.sizes.length>0 && product.colors.map((color) => (
                       <Radio
                         key={color.name}
                         value={color}
@@ -203,10 +204,10 @@ export default function ProductDetails({ id }) {
                     ))}
                   </RadioGroup>
                 </fieldset>
-              </div>
+              </div>}
 
               {/* Sizes */}
-              <div className="mt-10">
+              {product.sizes && product.sizes.length>0 && <div className="mt-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-900">Size</h3>
                   <a
@@ -223,7 +224,7 @@ export default function ProductDetails({ id }) {
                     onChange={setSelectedSize}
                     className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
                   >
-                    {sizes.map((size) => (
+                    {product.sizes.map((size) => (
                       <Radio
                         key={size.name}
                         value={size}
@@ -266,7 +267,7 @@ export default function ProductDetails({ id }) {
                     ))}
                   </RadioGroup>
                 </fieldset>
-              </div>
+              </div>}
               {presentInCart == 1 && (
                 <p className="mt-5 text-center font-bold text-red-600">
                   Already added to cart

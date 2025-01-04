@@ -16,6 +16,7 @@ import {
   selectAllCategories,
   selectAllProducts,
   selectItemCount,
+  setItemFetched,
 } from "../../product/ProductSlice";
 import {
   Dialog,
@@ -74,8 +75,8 @@ export default function AdminProductList() {
 useEffect(()=>{
  
 })
-  const handleEdit = (id) => {
-    dispatch(fetchProductByIdAsync(id))
+  const handleEdit = async (id) => {
+     dispatch(fetchProductByIdAsync(id))
     navigate(`/admin/productform/${id}`);
   };
   const handleSort = (e, option) => {
@@ -460,11 +461,12 @@ function Pagination({ page, handlePage, totalItems }) {
 }
 
 function ProductGrid({ products ,handleEdit}) {
+  const dispatch = useDispatch()
   return (
     <>
       <div className="lg:col-span-3">
         <div>
-          <Link to="/admin/productform">
+          <Link to="/admin/productform" onClick={()=>dispatch(setItemFetched())}>
             <button className="ml-8 my-2 mx-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Add New Product
             </button>

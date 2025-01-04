@@ -141,7 +141,7 @@ export default function AdminProductDetails() {
 
             <form className="mt-10">
               {/* Colors */}
-              <div>
+              {product.colors && product.colors.length>0 && <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
                 <fieldset aria-label="Choose a color" className="mt-4">
@@ -150,7 +150,7 @@ export default function AdminProductDetails() {
                     onChange={setSelectedColor}
                     className="flex items-center space-x-3"
                   >
-                    {colors.map((color) => (
+                    {product && product.colors.length>0 && product.colors.map((color) => (
                       <Radio
                         key={color.name}
                         value={color}
@@ -171,10 +171,10 @@ export default function AdminProductDetails() {
                     ))}
                   </RadioGroup>
                 </fieldset>
-              </div>
+              </div>}
 
               {/* Sizes */}
-              <div className="mt-10">
+             {product.sizes && product.sizes.length &&  <div className="mt-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-900">Size</h3>
                   <a
@@ -191,7 +191,7 @@ export default function AdminProductDetails() {
                     onChange={setSelectedSize}
                     className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
                   >
-                    {sizes.map((size) => (
+                    {product && product.sizes.length>0 && product.sizes.map((size) => (
                       <Radio
                         key={size.name}
                         value={size}
@@ -234,7 +234,7 @@ export default function AdminProductDetails() {
                     ))}
                   </RadioGroup>
                 </fieldset>
-              </div>
+              </div>}
 
               <button
                 onClick={handleCart}

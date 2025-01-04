@@ -37,7 +37,7 @@ export const logoutUser = async () => {
   const response = await fetch("http://localhost:3000/auth", {
     credentials: "include",
   });
-  return response.json();
+  return response;
 };
 
 export const checkAuth = async () => {

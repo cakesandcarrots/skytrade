@@ -11,9 +11,13 @@ import Modal from "../common/Modal";
 function Cart() {
   const items = useSelector(selectProductsByUserId);
   const cartLoaded = useSelector(selectCartLoaded)
+  //TODO: amount must be greater than 50 
   const [openModel, setOpenModel] = useState(-1);
   const totalAmount = items.reduce(
-    (amount, item) => item.product.price * item.quantity + amount,0);
+    (amount, item) => Math.round(
+      item.product.price *
+        (1 - item.product.discountPercentage / 100)
+    ) * item.quantity + amount,0);
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
   function handleQuantity(e, product) {
@@ -61,7 +65,10 @@ function Cart() {
                         <h3>
                           <a href={product.product.href}>{product.product.title}</a>
                         </h3>
-                        <p className="ml-4">${product.product.price}</p>
+                        <p className="ml-4">${Math.round(
+                              product.product.price *
+                                (1 - product.product.discountPercentage / 100)
+                            )}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
                         {product.product.brand}
