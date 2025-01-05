@@ -4,7 +4,8 @@ const initialState = {
     orders:[],
     status:"idle",
     currentOrder:null,
-    totalOrders:null
+    totalOrders:null,
+    orderCreated: false,
 }
 export const createOrderAsync = createAsyncThunk('card/createOrder',async(order)=>{
     const response = await createOrder(order);
@@ -31,9 +32,13 @@ const order = createSlice({
             state.status = 'idle';
             state.orders.push(action.payload)
             state.currentOrder = action.payload; 
+            state.orderCreated =true
+
         })
         .addCase(createOrderAsync.pending,(state)=>{
-            state.status ='loading'; 
+            state.status ='loading';
+            state.orderCreated =false
+ 
         })
         .addCase(fetchAllOrdersAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
@@ -49,4 +54,5 @@ export const {resetOrder}  = order.actions;
 export const selectAllOrders = (state)=>state.order.orders
 export const selectCurrentOrder = (state)=>state.order.currentOrder
 export const selectOrderCount = (state)=>state.order.totalOrders
+export const selectOrderCreatedStatus = (state)=>state.order.orderCreated
 export default  order.reducer;

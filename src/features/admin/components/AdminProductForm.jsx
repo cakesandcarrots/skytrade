@@ -60,7 +60,6 @@ export default function AdminProductForm() {
   const params = useParams();
   const item = useSelector(selectProductById);
   const itemFetched = useSelector(selectItemFetchedStatus);
-console.log(item)
   useEffect(() => {
     if (item) {
       setValue("title", item.title);
@@ -335,27 +334,29 @@ console.log(item)
                   </label>
 
                   {colors.map((color, index) => (
-                    <label className="pl-2" key={color.id}>
+                  
+                    <div className="block lg:inline">
                       <input
-                        type="checkbox"
+                        type="checkbox" className="inline"
                         {...register("colors")}
                         value={color.id}
                       />
-                      <span className="pl-1 align-middle">{color.name}</span>
-                    </label>
+                      <span className="pl-1 align-middle ">{color.name}</span>
+                      </div>
+                    
                   ))}
                   <label className=" my-2 block text-sm/6 font-medium text-gray-900">
                     Sizes
                   </label>
                   {sizes.map((size, index) => (
-                    <label className="pl-2" key={size.id}>
+                    <div className="block lg:inline">
                       <input
                         type="checkbox"
                         {...register("sizes")}
                         value={size.id}
                       />
                       <span className="pl-1 align-middle">{size.name}</span>
-                    </label>
+                      </div>
                   ))}
 
                   {errors.brand && (

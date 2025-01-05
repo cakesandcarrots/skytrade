@@ -56,8 +56,10 @@ export default function ProductList() {
   const categories = useSelector(selectAllCategories);
   const brands = useSelector(selectAllBrands);
   const [filter, setFilter] = useState({});
+  console.log(filter)
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const filters = [
     {
       id: "category",
@@ -80,20 +82,31 @@ export default function ProductList() {
   };
 
   const handleFilter = (e, section, option) => {
-    const newFilter = { ...filter };
+    const newSelectedFilters = { ...selectedFilters };
     if (e.target.checked) {
-      if (newFilter[section.id]) {
-        newFilter[section.id].push(option.value);
+      if (newSelectedFilters[section.id]) {
+        newSelectedFilters[section.id].push(option.value);
       } else {
-        newFilter[section.id] = [option.value];
+        newSelectedFilters[section.id] = [option.value];
       }
     } else {
-      const index = newFilter[section.id].findIndex(
+      const index = newSelectedFilters[section.id]?.findIndex(
         (it) => it === option.value
       );
-      newFilter[section.id].splice(index, 1);
+      if (index !== undefined && index !== -1) {
+        newSelectedFilters[section.id].splice(index, 1);
+        if (newSelectedFilters[section.id].length === 0) {
+          delete newSelectedFilters[section.id];
+        }
+      }
     }
-    setFilter(newFilter);
+    setSelectedFilters(newSelectedFilters);
+    dispatch(fetchProductsByFiltersAsync({ 
+      filter: newSelectedFilters, 
+      sort, 
+      pagination: { _page: 1, _per_page: ITEMS_PER_PAGE } 
+    }));
+    setPage(1);
   };
 
   useEffect(() => {
@@ -119,11 +132,13 @@ export default function ProductList() {
             setMobileFiltersOpen={setMobileFiltersOpen}
             handleFilter={handleFilter}
             filters={filters}
+            selectedFilters={selectedFilters}  // Add this line
+
           ></MobileFilter>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-5">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              <h1 className="lg:text-4xl sm:text-xl md:text-3xl font-bold tracking-tight text-gray-900">
                 All Products
               </h1>
 
@@ -163,13 +178,7 @@ export default function ProductList() {
                   </MenuItems>
                 </Menu>
 
-                <button
-                  type="button"
-                  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                >
-                  <span className="sr-only">View grid</span>
-                  <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-                </button>
+               
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(true)}
@@ -191,6 +200,8 @@ export default function ProductList() {
                 <DesktopFilter
                   handleFilter={handleFilter}
                   filters={filters}
+                  selectedFilters={selectedFilters}  // Add this line
+
                 ></DesktopFilter>
 
                 {/* Product grid */}
@@ -217,6 +228,8 @@ function MobileFilter({
   setMobileFiltersOpen,
   handleFilter,
   filters,
+  selectedFilters,
+
 }) {
   return (
     <>
@@ -279,8 +292,7 @@ function MobileFilter({
                       {section.options.map((option, optionIdx) => (
                         <div key={option.value} className="flex items-center">
                           <input
-                            defaultValue={option.value}
-                            defaultChecked={option.checked}
+                         checked={selectedFilters[section.id]?.includes(option.value) || false}
                             id={`filter-mobile-${section.id}-${optionIdx}`}
                             onChange={(e) => handleFilter(e, section, option)}
                             name={`${section.id}[]`}
@@ -307,7 +319,7 @@ function MobileFilter({
   );
 }
 
-function DesktopFilter({ handleFilter, filters }) {
+function DesktopFilter({ handleFilter, filters,  selectedFilters}) {
   return (
     <>
       <form className="hidden lg:block">
@@ -341,8 +353,9 @@ function DesktopFilter({ handleFilter, filters }) {
                 {section.options.map((option, optionIdx) => (
                   <div key={option.value} className="flex items-center">
                     <input
-                      defaultValue={option.value}
-                      defaultChecked={option.checked}
+                      checked={selectedFilters[section.id]?.includes(option.value) || false}
+
+
                       id={`filter-${section.id}-${optionIdx}`}
                       name={`${section.id}[]`}
                       type="checkbox"
@@ -371,7 +384,7 @@ function Pagination({ page, handlePage, totalItems }) {
   return (
     <>
       <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-        <div className="flex flex-1 justify-between sm:hidden">
+        <div className="flex flex-1 justify-between md:hidden">
           <div
             onClick={(e) => handlePage(page - 1 > 0 ? page - 1 : totalPages)}
             className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
@@ -385,7 +398,7 @@ function Pagination({ page, handlePage, totalItems }) {
             Next
           </div>
         </div>
-        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div className="hidden md:flex sm:flex-1 sm:items-center sm:justify-between">
           <div>
             <p className="text-sm text-gray-700">
               Showing{" "}

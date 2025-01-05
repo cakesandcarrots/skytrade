@@ -13,9 +13,9 @@ function UserOrders() {
   return (
     <>
       {orders ? orders.map((order) => {  return (
-        <div key={order.id} className="mx-auto pb-5 bg-white max-w-4xl mt-6 px-4 sm:px-6 lg:px-8">
-          <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-            <h1 className="text-4xl mt-5 font-bold tracking-tight text-gray-900">
+        <div key={order.id} className="mx-auto pb-5 bg-white max-w-4xl mt-6 sm:px-6 lg:px-8">
+          <div className="border-t border-gray-200 px-2 s py-6 sm:px-6">
+            <h1 className="lg:text-4xl md:text-2xl sm:text mt-5 font-bold tracking-tight text-gray-900">
               Items in Order ID:{order.id}
             </h1>
             <h3 className=" my-3 font-bold tracking-tight text-red-900">
@@ -34,11 +34,11 @@ function UserOrders() {
 
                     <div className="ml-4 flex flex-1 flex-col">
                       <div>
-                        <div className="flex justify-between text-base font-medium text-gray-900">
+                        <div className="flex justify-between text-sm sm:text-base font-medium text-gray-900">
                           <h3>
                             <p>{item.product.title}</p>
                           </h3>
-                          <p className="ml-4">${item.product.price}</p>
+                          <p className="ml-1 sm:ml-4 ">${item.product.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.product.brand}

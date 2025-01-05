@@ -10,8 +10,10 @@ import { useForm } from "react-hook-form";
 import {
   createOrderAsync,
   selectCurrentOrder,
+  selectOrderCreatedStatus
 } from "../features/order/orderSlice";
 import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
+import { toast, Bounce } from "react-toastify";
 
 function CheckoutPage() {
   const {
@@ -28,15 +30,19 @@ function CheckoutPage() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [checkIndex, setCheckIndex] = useState(0);
-  const handleSelect = (index) => {};
+  const [loadingToastId, setLoadingToastId] = useState(null); // State for loading toast
   const totalAmount = items.reduce(
     (amount, item) => item.product.price * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
+  const orderCreatedStatus = useSelector(selectOrderCreatedStatus);
   const dispatch = useDispatch();
+
   function handleQuantity(e, product) {
-    dispatch(updateCartAsync({ id: product.product.id, quantity: +e.target.value }));
+    dispatch(
+      updateCartAsync({ id: product.product.id, quantity: +e.target.value })
+    );
   }
   function handleDelete(e, itemId) {
     dispatch(deleteItemFromCartAsync(itemId));
@@ -44,7 +50,15 @@ function CheckoutPage() {
 
   useEffect(() => {
     setSelectedAddress(userInfo.addresses[checkIndex]);
-  }, [checkIndex]);
+  }, [checkIndex, userInfo]);
+
+  useEffect(() => {
+    if (loadingToastId && orderCreatedStatus) {
+      toast.dismiss(loadingToastId);
+      setLoadingToastId(null);
+    }
+  }, [orderCreatedStatus, loadingToastId]);
+
   const handleAddress = (e) => {
     setCheckIndex(+e.target.value);
   };
@@ -54,6 +68,20 @@ function CheckoutPage() {
   };
 
   const handleOrder = () => {
+    if (!selectedAddress) {
+      toast.warning("You have to select an address", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
     const order = {
       user: userInfo,
       selectedAddress,
@@ -63,28 +91,29 @@ function CheckoutPage() {
       totalItems,
       status: "pending",
     };
+
+    const toastId = toast.loading("Creating your order...", {
+      position: "top-center",
+      hideProgressBar: true,
+    });
+    setLoadingToastId(toastId);
+
     dispatch(createOrderAsync(order));
   };
+
 
   return (
     <>
       {items.length == 0 && <Navigate to="/" replace="true"></Navigate>}
-      {currentOrder &&
-        currentOrder.paymentMethod ==
-          "cash" && 
-            <Navigate
-              to={`/order-success/${currentOrder.id}`}
-              replace="true"
-            ></Navigate>
-          }
-      {currentOrder &&
-        currentOrder.paymentMethod ==
-          "card" && 
-            <Navigate
-              to={`/stripe-checkout`}
-              replace="true"
-            ></Navigate>
-          }
+      {currentOrder && currentOrder.paymentMethod == "cash" && (
+        <Navigate
+          to={`/order-success/${currentOrder.id}`}
+          replace="true"
+        ></Navigate>
+      )}
+      {currentOrder && currentOrder.paymentMethod == "card" && (
+        <Navigate to={`/stripe-checkout`} replace="true"></Navigate>
+      )}
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
@@ -262,43 +291,53 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-                    {userInfo.addresses.map((address, index) => {
-                      return (
-                        <li
-                          key={address.name}
-                          className="flex justify-between border-2 px-5 gap-x-6 py-5"
-                        >
-                          <div className="flex min-w-0 gap-x-4">
-                            <input
-                              onChange={(e) => handleAddress(e)}
-                              id="address"
-                              name="addresschoice"
-                              type="radio"
-                              value={index}
-                              checked={checkIndex === index}
-                              className=" border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <div className="min-w-0 flex-auto">
-                              <p className="text-sm font-semibold leading-6 text-gray-900">
-                                {address.name}
-                              </p>
-                              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                                {address.phone}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <p className="text-sm leading-6 text-gray-900">
-                              {address.street},{address.city},{address.state}
-                            </p>
-                            <p className="text-xs leading-5 text-gray-500">
-                              {address.pincode}
-                            </p>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
+  {userInfo.addresses.length > 0 ? (
+    userInfo.addresses.map((address, index) => {
+      return (
+        <li
+          key={address.name}
+          className="flex flex-col sm:flex-row justify-between border-2 px-5 gap-x-6 py-5"
+        >
+          <div className="flex min-w-0 gap-x-4 flex-col sm:flex-row">
+            <input
+              onChange={(e) => handleAddress(e)}
+              id="address"
+              name="addresschoice"
+              type="radio"
+              required
+              value={index}
+              checked={checkIndex === index}
+              className="border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            />
+            <div className="min-w-0 flex-auto">
+              <p className="text-sm font-semibold leading-6 text-gray-900">
+                {address.name}
+              </p>
+              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                {address.phone}
+              </p>
+            </div>
+          </div>
+          {/* Stacking address details below name and phone on small screens */}
+          <div className="sm:flex sm:flex-col sm:items-end mt-3 sm:mt-0">
+            <p className="text-sm leading-6 text-gray-900">
+              {address.street}, {address.city}, {address.state}
+            </p>
+            <p className="text-xs leading-5 text-gray-500">
+              {address.pincode}
+            </p>
+          </div>
+        </li>
+      );
+    })
+  ) : (
+    <p className="mt-1 text-xl leading-6 text-red-600 text-center">
+      Add an address to make an order
+    </p>
+  )}
+</ul>
+
+
 
                   <div className="mt-10 space-y-10">
                     <fieldset>
@@ -351,9 +390,9 @@ function CheckoutPage() {
             </form>
           </div>
           <div className=" lg:col-span-2 ">
-            <div className="mx-auto bg-white max-w-4xl mt-12 px-4 sm:px-6 lg:px-2">
+            <div className="mx-auto bg-white max-w-4xl mt-12  sm:px-6 lg:px-2">
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">
+                <h1 className="lg:text-4xl md:text-3xl text-2xl  my-5 font-bold tracking-tight text-gray-900">
                   Cart
                 </h1>
                 <div className="flow-root">

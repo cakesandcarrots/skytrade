@@ -6,14 +6,13 @@ export const fetchAllProducts = async () => {
   return { data };
 };
 
-export const fetchProductsByFilters = async ({ filter, sort, pagination }) => {
+export const fetchProductsByFilters = async ({ filter, sort, pagination,role }) => {
   let queryString = "";
 
   for (let key in filter) {
     const categoryValues = filter[key];
     if (categoryValues.length) {
-      const lastCategoryValue = categoryValues[categoryValues.length - 1];
-      queryString += `${key}=${encodeURIComponent(lastCategoryValue)}&`;
+      queryString += `${key}=${encodeURIComponent(categoryValues)}&`;
     }
   }
 
@@ -23,6 +22,7 @@ export const fetchProductsByFilters = async ({ filter, sort, pagination }) => {
   if (sort._sort) {
     queryString += `_sort=${sort._sort}&`;
   }
+  queryString+=`role=${role}`
 
   const finalUrl = "http://localhost:3000/products?" + queryString;
   const response = await fetch(finalUrl,{credentials:"include"});

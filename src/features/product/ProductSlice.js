@@ -3,7 +3,7 @@ import { fetchAllProducts, fetchProductsByFilters,fetchAllBrands,fetchAllCategor
 
 const initialState = {
     products: [],
-    totalitems: 0,
+    totalItems: 0,
     status: 'idle',
     categories: [],
     brands: [],
@@ -31,18 +31,29 @@ export const fetchAllBrandsAsync = createAsyncThunk('product/fetchAllBrands',asy
 });
 
 
-export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProductsByFilters', async ({filter,sort,pagination}) => {
-    const response = await fetchProductsByFilters({filter,sort,pagination});
-    let filteredData = response.data.data;
-    if (filter.category && filter.category.length) {
-      filteredData = filteredData.filter(item => item.category === filter.category[filter.category.length-1]);
-    }
-    else if (filter.brand && filter.brand.length) {
-      filteredData = filteredData.filter(item => item.brand === filter.brand[filter.brand.length-1]);
-    }  
-    filteredData.totalitems = response.data.items
-    return filteredData;
-  });
+export const fetchProductsByFiltersAsync = createAsyncThunk('product/fetchProductsByFilters', async ({ filter, sort, pagination,role }) => {
+  const response = await fetchProductsByFilters({ filter, sort, pagination,role });
+  let filteredData = response.data.data;
+
+  // Filter by categories if present
+  if (filter.category && filter.category.length>0) {
+    filteredData = filteredData.filter(item =>
+      filter.category.includes(item.category)
+    );
+  }
+
+  // Filter by brands if present
+  if (filter.brand && filter.brand.length>0) {
+    filteredData = filteredData.filter(item =>
+      filter.brand.includes(item.brand)
+    );
+  }
+
+  // Add the total items count to the filtered data
+  filteredData.totalItems = response.data.items;
+  return filteredData;
+});
+
   
   
 
@@ -84,11 +95,12 @@ export const productSlice = createSlice({
         })
         .addCase(fetchProductsByFiltersAsync.pending,(state)=>{
             state.status ='loading';
+            state.itemFetched =false;
         })
         .addCase(fetchProductsByFiltersAsync.fulfilled,(state,action)=>{
             state.status = 'idle';
-            state.totalitems = action.payload.totalitems
-            state.products = action.payload.filter(item=>item!="totalitems")
+            state.totalItems = action.payload.totalItems
+            state.products = action.payload.filter(item=>item!="totalItems")
         })
         .addCase(fetchAllCategoriesAsync.pending,(state)=>{
             state.status ='loading';
@@ -137,7 +149,7 @@ export const productSlice = createSlice({
 export const {resetProduct}= productSlice.actions
 export const {setItemFetched} = productSlice.actions
 export const selectAllProducts = (state)=>state.product.products;
-export const selectItemCount = (state)=>state.product.totalitems;
+export const selectItemCount = (state)=>state.product.totalItems;
 export const selectAllCategories = (state)=>state.product.categories;
 export const selectAllBrands = (state)=>state.product.brands;
 export const selectProductById = (state)=>state.product.item

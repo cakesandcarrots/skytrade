@@ -34,11 +34,12 @@ export default function AdminProductDetails() {
     return classes.filter(Boolean).join(" ");
   }
   const highlights = [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
+    "Exclusive handcrafted quality for every product.",
+    "Made with premium materials for unmatched durability.",
+    "Customer satisfaction guaranteed with hassle-free returns.",
+    "Unique designs to help you stand out effortlessly.",
   ];
+  
 
   const handleCart = (e) => {
     e.preventDefault();

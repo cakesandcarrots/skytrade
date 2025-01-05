@@ -57,6 +57,7 @@ const cart = createSlice({
             state.status = 'idle';
             const index = state.items.findIndex((item)=>item.id===action.payload.id)
             state.items[index] = action.payload
+            console.log(state.items[index])
         })
         .addCase(updateCartAsync.pending,(state)=>{
             state.status ='loading'; 

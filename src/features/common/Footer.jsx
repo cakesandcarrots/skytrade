@@ -5,8 +5,8 @@ function Footer() {
       <div className=" bg-gray-900">
         <div className="max-w-2xl mx-auto text-white py-10">
           <div className="text-center">
-            <h3 className="text-2xl font-bold mb-3"> Happy Shopping </h3>
-            <p> Shop smart. Anytime, anywhere.</p>
+            <h3 className="lg:text-2xl sm:text-xl font-bold mb-3"> Happy Shopping </h3>
+            <p className="lg:text-xl"> Shop smart. Anytime, anywhere.</p>
             
           </div>
           <div className="mt-16 text-sm text-gray-400">

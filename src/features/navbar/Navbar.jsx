@@ -17,8 +17,9 @@ import { Link } from "react-router-dom";
 import { selectProductsByUserId } from "../cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
 import skytrade from "../../images/skytrade.png"
+import md5 from 'md5';
+
 const navigation = [
-  { name: "Products", link: "/", role: "user" },
   { name: "Admin", link: "/admin", role: "admin" },
   { name: "Orders", link: "/admin/orders", role: "admin" }
 ];
@@ -28,6 +29,10 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
+  const getGravatarUrl = (email) => {
+    const hash = md5(email.trim().toLowerCase());
+    return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+  };
   const user = useSelector(selectUserInfo);
   const items = useSelector(selectProductsByUserId);
   const userNavigation = [
@@ -102,7 +107,7 @@ export default function Navbar({ children }) {
                         <span className="sr-only">Open user menu</span>
                         <img
                           alt=""
-                          src={user?.imageUrl}
+                          src={user?.imageUrl || getGravatarUrl(user?.email || '')}
                           className="h-8 w-8 rounded-full"
                         />
                       </MenuButton>
@@ -144,10 +149,11 @@ export default function Navbar({ children }) {
           </div>
 
           <DisclosurePanel className="md:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {navigation.map((item, index) => (
-                <DisclosureButton
+            <div className="space-y-1 px-2   sm:px-3">
+              {navigation.map((item, index) =>user && item.role==user.role ? (
+                <Link
                   key={index}
+                  to={item.link}
                   aria-current={item.current ? "page" : undefined}
                   className={classNames(
                     item.current
@@ -157,15 +163,15 @@ export default function Navbar({ children }) {
                   )}
                 >
                   {item.name}
-                </DisclosureButton>
-              ))}
+                </Link>
+              ):null)}
             </div>
             <div className="border-t border-gray-700 pb-3 pt-4">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
                   <img
                     alt=""
-                    src={user?.imageUrl}
+                          src={user?.imageUrl || getGravatarUrl(user?.email || '')}
                     className="h-10 w-10 rounded-full"
                   />
                 </div>
@@ -180,7 +186,7 @@ export default function Navbar({ children }) {
                 <Link to="/cart">
                   <button
                     type="button"
-                    className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative ml-5 flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
