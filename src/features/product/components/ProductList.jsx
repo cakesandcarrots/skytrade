@@ -37,6 +37,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { selectProductsByUserId } from "../../cart/cartSlice";
 
 const sortOptions = [
   { name: "Best Rating", sort: "-rating", current: false },
@@ -55,8 +56,8 @@ export default function ProductList() {
   const totalItems = useSelector(selectItemCount);
   const categories = useSelector(selectAllCategories);
   const brands = useSelector(selectAllBrands);
+  const cartItems = useSelector(selectProductsByUserId)
   const [filter, setFilter] = useState({});
-  console.log(filter)
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -101,11 +102,13 @@ export default function ProductList() {
       }
     }
     setSelectedFilters(newSelectedFilters);
-    dispatch(fetchProductsByFiltersAsync({ 
-      filter: newSelectedFilters, 
-      sort, 
-      pagination: { _page: 1, _per_page: ITEMS_PER_PAGE } 
-    }));
+    dispatch(
+      fetchProductsByFiltersAsync({
+        filter: newSelectedFilters,
+        sort,
+        pagination: { _page: 1, _per_page: ITEMS_PER_PAGE },
+      })
+    );
     setPage(1);
   };
 
@@ -132,8 +135,7 @@ export default function ProductList() {
             setMobileFiltersOpen={setMobileFiltersOpen}
             handleFilter={handleFilter}
             filters={filters}
-            selectedFilters={selectedFilters}  // Add this line
-
+            selectedFilters={selectedFilters} // Add this line
           ></MobileFilter>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -178,7 +180,6 @@ export default function ProductList() {
                   </MenuItems>
                 </Menu>
 
-               
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(true)}
@@ -200,12 +201,16 @@ export default function ProductList() {
                 <DesktopFilter
                   handleFilter={handleFilter}
                   filters={filters}
-                  selectedFilters={selectedFilters}  // Add this line
-
+                  selectedFilters={selectedFilters}
                 ></DesktopFilter>
 
-                {/* Product grid */}
-                <ProductGrid products={products}></ProductGrid>
+                {!products.length ? (
+                  <div className="flex items-center justify-center col-span-3 lg:col-start-2 lg:col-span-3 h-screen">
+                    <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+                  </div>
+                ) : (
+                  <ProductGrid products={products} />
+                )}
               </div>
             </section>
           </main>
@@ -229,7 +234,6 @@ function MobileFilter({
   handleFilter,
   filters,
   selectedFilters,
-
 }) {
   return (
     <>
@@ -256,7 +260,7 @@ function MobileFilter({
                 className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
               >
                 <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                <XMarkIcon aria-hidden="true" className="h-6 w-6"/>
               </button>
             </div>
 
@@ -292,7 +296,11 @@ function MobileFilter({
                       {section.options.map((option, optionIdx) => (
                         <div key={option.value} className="flex items-center">
                           <input
-                         checked={selectedFilters[section.id]?.includes(option.value) || false}
+                            checked={
+                              selectedFilters[section.id]?.includes(
+                                option.value
+                              ) || false
+                            }
                             id={`filter-mobile-${section.id}-${optionIdx}`}
                             onChange={(e) => handleFilter(e, section, option)}
                             name={`${section.id}[]`}
@@ -319,7 +327,7 @@ function MobileFilter({
   );
 }
 
-function DesktopFilter({ handleFilter, filters,  selectedFilters}) {
+function DesktopFilter({ handleFilter, filters, selectedFilters }) {
   return (
     <>
       <form className="hidden lg:block">
@@ -353,9 +361,10 @@ function DesktopFilter({ handleFilter, filters,  selectedFilters}) {
                 {section.options.map((option, optionIdx) => (
                   <div key={option.value} className="flex items-center">
                     <input
-                      checked={selectedFilters[section.id]?.includes(option.value) || false}
-
-
+                      checked={
+                        selectedFilters[section.id]?.includes(option.value) ||
+                        false
+                      }
                       id={`filter-${section.id}-${optionIdx}`}
                       name={`${section.id}[]`}
                       type="checkbox"

@@ -1,5 +1,5 @@
 export const addToCart = async (item) => {
-  const response = await fetch("http://localhost:3000/cart", {
+  const response = await fetch("https://skytrade-backend.vercel.app/cart", {
     method: "POST",
     credentials:"include",
     body: JSON.stringify(item),
@@ -10,13 +10,13 @@ export const addToCart = async (item) => {
 };
 
 export const fetchItemsByUserId = async () => {
-  const response = await fetch("http://localhost:3000/cart",{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/cart",{credentials:"include"});
   const data =await response.json();
   return data;
 };
 
 export const updateCart = async (update) => {
-    const response = await fetch("http://localhost:3000/cart/"+update.id, {
+    const response = await fetch("https://skytrade-backend.vercel.app/cart/"+update.id, {
       method: "PATCH",
       credentials:"include",
       body: JSON.stringify(update),
@@ -26,22 +26,22 @@ export const updateCart = async (update) => {
     return data;
 };
 
-export const deleteItemFromCart = async (itemId) => {
-  const response = await fetch("http://localhost:3000/cart/"+itemId, {
+export const deleteItemFromCart = async (cartItemId) => {
+  const response = await fetch("https://skytrade-backend.vercel.app/cart/"+cartItemId, {
     credentials:"include",
     method: "DELETE",
     headers: { "content-type": "application/json" },
   });
-  return itemId;
+  return response.json();
 };
 
-export const resetCart = async (userId) => {
+export const resetCart = async () => {
   const cartItems = await fetchItemsByUserId();
   for (let item of cartItems){
-   await deleteItemFromCart(item.user.id);
+   await deleteItemFromCart(item.id);
   }
 
-  return userId; 
+  return true; 
 
 };
 

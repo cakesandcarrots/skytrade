@@ -1,7 +1,7 @@
 
 //DONE
 export const fetchAllProducts = async () => {
-  const response = await fetch("http://localhost:3000/products",{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/products",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
@@ -24,32 +24,32 @@ export const fetchProductsByFilters = async ({ filter, sort, pagination,role }) 
   }
   queryString+=`role=${role}`
 
-  const finalUrl = "http://localhost:3000/products?" + queryString;
+  const finalUrl = "https://skytrade-backend.vercel.app/products?" + queryString;
   const response = await fetch(finalUrl,{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchAllCategories = async () => {
-  const response = await fetch("http://localhost:3000/categories",{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/categories",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchAllBrands = async () => {
-  const response = await fetch("http://localhost:3000/brands",{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/brands",{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 
 export const fetchProductById = async (id) => {
-  const response = await fetch("http://localhost:3000/products/" + id,{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/products/" + id,{credentials:"include"});
   const data = await response.json();
   return { data };
 };
 export const createProduct = async(product)=>{
 
-const response = await fetch("http://localhost:3000/products",
+const response = await fetch("https://skytrade-backend.vercel.app/products",
   {method: "POST",
   body: JSON.stringify(product),
   credentials:"include",
@@ -60,7 +60,7 @@ return {data};
 }
 
 export const updateProduct = async(product)=>{
-  const response = await fetch("http://localhost:3000/products/"+product.id,
+  const response = await fetch("https://skytrade-backend.vercel.app/products/"+product.id,
     {method: "PATCH",
       credentials:"include",
     body: JSON.stringify(product),

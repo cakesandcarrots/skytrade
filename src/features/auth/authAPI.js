@@ -1,6 +1,6 @@
 //DONE
 export const createUser = async (userData) => {
-  const response = await fetch("http://localhost:3000/user", {
+  const response = await fetch("https://skytrade-backend.vercel.app/user", {
     method: "POST",
     body: JSON.stringify(userData),
     credentials: "include",
@@ -12,7 +12,7 @@ export const createUser = async (userData) => {
 
 export const login = async (userData) => {
   try {
-    const response = await fetch("http://localhost:3000/auth", {
+    const response = await fetch("https://skytrade-backend.vercel.app/auth", {
       method: "POST",
       body: JSON.stringify(userData),
       credentials: "include",
@@ -34,14 +34,14 @@ export const login = async (userData) => {
 };
 
 export const logoutUser = async () => {
-  const response = await fetch("http://localhost:3000/auth", {
+  const response = await fetch("https://skytrade-backend.vercel.app/auth", {
     credentials: "include",
   });
   return response;
 };
 
 export const checkAuth = async () => {
-  const response = await fetch("http://localhost:3000/auth/check",{credentials:"include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/auth/check",{credentials:"include"});
   if (!response.ok) {
     throw new Error("Failed to authenticate");
   }
@@ -52,7 +52,7 @@ export const checkAuth = async () => {
 
 export const resetPasswordRequest = async (email) => {
   const response = await fetch(
-    "http://localhost:3000/auth/reset-password-request",
+    "https://skytrade-backend.vercel.app/auth/reset-password-request",
     {
       method: "POST",
       body: JSON.stringify({ email: email }),
@@ -72,7 +72,7 @@ export const resetPasswordRequest = async (email) => {
 
 export const resetPassword = async ({email,token, password}) => {
   const response = await fetch(
-    "http://localhost:3000/auth/reset-password",
+    "https://skytrade-backend.vercel.app/auth/reset-password",
     {
       method: "POST",
       body: JSON.stringify({email,token, password}),

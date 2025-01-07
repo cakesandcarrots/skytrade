@@ -1,5 +1,5 @@
 export async function fetchLoggedInUserOrders() {
-  const response = await fetch("http://localhost:3000/orders",{
+  const response = await fetch("https://skytrade-backend.vercel.app/orders",{
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -11,7 +11,7 @@ export async function fetchLoggedInUserOrders() {
 
 //done
 export const updateUser = async (update) => {
-  const response = await fetch("http://localhost:3000/user/" + update.id, {
+  const response = await fetch("https://skytrade-backend.vercel.app/user/" + update.id, {
     credentials: "include",
     method: "PATCH",
     body: JSON.stringify(update),
@@ -23,7 +23,7 @@ export const updateUser = async (update) => {
 
 //done
 export async function fetchLoggedInUser() {
-  const response = await fetch("http://localhost:3000/user",{credentials: "include"});
+  const response = await fetch("https://skytrade-backend.vercel.app/user",{credentials: "include"});
   const data = await response.json();
   return data;
 }

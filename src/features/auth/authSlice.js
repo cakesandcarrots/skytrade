@@ -127,7 +127,6 @@ export const authSlice = createSlice({
       })
       .addCase(checkAuthAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.error = action.payload;
         state.userChecked = true
       })
       .addCase(resetPasswordRequestAsync.pending, (state) => {

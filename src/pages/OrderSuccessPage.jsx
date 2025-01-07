@@ -1,18 +1,17 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { selectLoggedInUser } from "../features/auth/authSlice";
 import { resetCartAsync } from "../features/cart/cartSlice";
 import { resetOrder } from "../features/order/orderSlice";
 
 function OrderSuccesspage() {
 const params = useParams();
 const dispatch = useDispatch()
-const user = useSelector(selectLoggedInUser)
+
   useEffect(()=>{
       dispatch(resetCartAsync())
     dispatch(resetOrder());
-  },[dispatch,user])
+  },[])
   return (
     <>
   <div className="flex min-h-screen items-center justify-center bg-white"> {/* Wrap in a flex container */}

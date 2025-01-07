@@ -10,7 +10,6 @@ import {
 import Modal from "../common/Modal";
 function Cart() {
   const items = useSelector(selectProductsByUserId);
-  console.log(items);
   const cartLoaded = useSelector(selectCartLoaded);
   //TODO: amount must be greater than 50
   const [openModel, setOpenModel] = useState(-1);
@@ -26,20 +25,18 @@ function Cart() {
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const dispatch = useDispatch();
   function handleQuantity(e, product) {
-    console.log("hi");
     dispatch(
       updateCartAsync({ id: product.product.id, quantity: +e.target.value })
     );
   }
-  function handleDelete(itemId) {
-    dispatch(deleteItemFromCartAsync(itemId));
+  function handleDelete(cartItemId) {
+    dispatch(deleteItemFromCartAsync(cartItemId));
     setOpenModel(-1);
   }
   function toggleModel(productId) {
     if (productId === openModel) setOpenModel(-1);
     setOpenModel(productId);
   }
-  console.log(items);
 
   return (
     <>
@@ -67,7 +64,7 @@ function Cart() {
                       dangerDescription={"Do you really want to delete this?"}
                       dangerOption={"Delete"}
                       cancelOption={"Cancel"}
-                      dangerAction={() => handleDelete(product.product.id)}
+                      dangerAction={() => handleDelete(product.id)}
                       toggleModel={toggleModel}
                     ></Modal>
                   )}

@@ -106,11 +106,13 @@ export default function AdminProductList() {
       }
     }
     setSelectedFilters(newSelectedFilters);
-    dispatch(fetchProductsByFiltersAsync({ 
-      filter: newSelectedFilters, 
-      sort, 
-      pagination: { _page: 1, _per_page: ITEMS_PER_PAGE } 
-    }));
+    dispatch(
+      fetchProductsByFiltersAsync({
+        filter: newSelectedFilters,
+        sort,
+        pagination: { _page: 1, _per_page: ITEMS_PER_PAGE },
+      })
+    );
     setPage(1);
   };
   useEffect(() => {
@@ -137,11 +139,10 @@ export default function AdminProductList() {
             setMobileFiltersOpen={setMobileFiltersOpen}
             handleFilter={handleFilter}
             filters={filters}
-            selectedFilters={selectedFilters}  
-
+            selectedFilters={selectedFilters}
           ></MobileFilter>
 
-<main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-5">
               <h1 className="lg:text-4xl sm:text-xl md:text-3xl font-bold tracking-tight text-gray-900">
                 All Products
@@ -183,7 +184,6 @@ export default function AdminProductList() {
                   </MenuItems>
                 </Menu>
 
-            
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(true)}
@@ -205,16 +205,16 @@ export default function AdminProductList() {
                 <DesktopFilter
                   handleFilter={handleFilter}
                   filters={filters}
-                  selectedFilters={selectedFilters}  
-
+                  selectedFilters={selectedFilters}
                 ></DesktopFilter>
 
-                {/* Product grid */}
-
-                <ProductGrid
-                  products={products}
-                  handleEdit={handleEdit}
-                ></ProductGrid>
+                {!products.length ? (
+                  <div className="flex items-center justify-center col-span-1 lg:col-start-3 lg:col-span-2 h-screen">
+                    <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+                  </div>
+                ) : (
+                  <ProductGrid products={products} />
+                )}
               </div>
             </section>
           </main>
@@ -237,8 +237,7 @@ function MobileFilter({
   setMobileFiltersOpen,
   handleFilter,
   filters,
-  selectedFilters 
-
+  selectedFilters,
 }) {
   return (
     <>
@@ -301,7 +300,11 @@ function MobileFilter({
                       {section.options.map((option, optionIdx) => (
                         <div key={option.value} className="flex items-center">
                           <input
-                          checked={selectedFilters[section.id]?.includes(option.value) || false}
+                            checked={
+                              selectedFilters[section.id]?.includes(
+                                option.value
+                              ) || false
+                            }
                             id={`filter-mobile-${section.id}-${optionIdx}`}
                             onChange={(e) => handleFilter(e, section, option)}
                             name={`${section.id}[]`}
@@ -328,8 +331,7 @@ function MobileFilter({
   );
 }
 
-function DesktopFilter({ handleFilter, filters,  selectedFilters  
-}) {
+function DesktopFilter({ handleFilter, filters, selectedFilters }) {
   return (
     <>
       <form className="hidden lg:block">
@@ -363,7 +365,10 @@ function DesktopFilter({ handleFilter, filters,  selectedFilters
                 {section.options.map((option, optionIdx) => (
                   <div key={option.value} className="flex items-center">
                     <input
-                   checked={selectedFilters[section.id]?.includes(option.value) || false}
+                      checked={
+                        selectedFilters[section.id]?.includes(option.value) ||
+                        false
+                      }
                       id={`filter-${section.id}-${optionIdx}`}
                       name={`${section.id}[]`}
                       type="checkbox"
@@ -509,7 +514,7 @@ function ProductGrid({ products, handleEdit }) {
                           <div href={product.thumbnail}>
                             {product.deleted == true && (
                               <div className="text-red-600 font-bold">
-                               Product deleted
+                                Product deleted
                               </div>
                             )}
 

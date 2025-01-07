@@ -11,7 +11,7 @@ export default function StripCheckout() {
   const [clientSecret, setClientSecret] = useState("");
   const currentOrder = useSelector(selectCurrentOrder);
   useEffect(() => {
-    fetch("http://localhost:3000/create-payment-intent", {
+    fetch("https://skytrade-backend.vercel.app/stripe/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({totalAmount: currentOrder.totalAmount}),

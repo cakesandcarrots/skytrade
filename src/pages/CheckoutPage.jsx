@@ -44,8 +44,8 @@ function CheckoutPage() {
       updateCartAsync({ id: product.product.id, quantity: +e.target.value })
     );
   }
-  function handleDelete(e, itemId) {
-    dispatch(deleteItemFromCartAsync(itemId));
+  function handleDelete(e, cartItemId) {
+    dispatch(deleteItemFromCartAsync(cartItemId));
   }
 
   useEffect(() => {

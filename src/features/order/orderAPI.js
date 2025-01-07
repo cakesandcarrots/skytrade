@@ -1,5 +1,5 @@
 export const createOrder = async (order) => {
-  const response = await fetch("http://localhost:3000/orders", {
+  const response = await fetch("https://skytrade-backend.vercel.app/orders", {
     method: "POST",
     body: JSON.stringify(order),
     credentials:"include",
@@ -16,7 +16,7 @@ export const fetchAllOrders = async ({ sort, pagination }) => {
   if (sort) {
     queryString += `_sort=${sort}&`;
   }
-  const finalUrl = "http://localhost:3000/orders/all?" + queryString;
+  const finalUrl = "https://skytrade-backend.vercel.app/orders/all?" + queryString;
   const response = await fetch(finalUrl,{credentials:"include"});
   const data = await response.json();
   return data;
