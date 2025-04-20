@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import {
   createOrderAsync,
   selectCurrentOrder,
-  selectOrderCreatedStatus
+  selectOrderCreatedStatus,
 } from "../features/order/orderSlice";
 import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
 import { toast, Bounce } from "react-toastify";
@@ -31,8 +31,10 @@ function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [checkIndex, setCheckIndex] = useState(0);
   const [loadingToastId, setLoadingToastId] = useState(null); // State for loading toast
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false); // Add state for disabling button
   const totalAmount = items.reduce(
-    (amount, item) => item.product.price * item.quantity + amount,
+    (amount, item) =>
+      Math.round((item.product.price * item.quantity + amount) * 100 / 100),
     0
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
@@ -80,6 +82,7 @@ function CheckoutPage() {
         theme: "light",
         transition: Bounce,
       });
+      setIsPlacingOrder(false); // Reset if validation fails
       return;
     }
     const order = {
@@ -97,10 +100,10 @@ function CheckoutPage() {
       hideProgressBar: true,
     });
     setLoadingToastId(toastId);
+    setIsPlacingOrder(true); // Disable button before dispatching
 
     dispatch(createOrderAsync(order));
   };
-
 
   return (
     <>
@@ -139,6 +142,8 @@ function CheckoutPage() {
                   <p className="mt-1 text-sm leading-6 text-gray-600">
                     Use a permanent address where you can receive mail.
                   </p>
+
+
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-4">
@@ -291,53 +296,52 @@ function CheckoutPage() {
                     Select an existing address
                   </p>
                   <ul role="list">
-  {userInfo.addresses.length > 0 ? (
-    userInfo.addresses.map((address, index) => {
-      return (
-        <li
-          key={address.name}
-          className="flex flex-col sm:flex-row justify-between border-2 px-5 gap-x-6 py-5"
-        >
-          <div className="flex min-w-0 gap-x-4 flex-col sm:flex-row">
-            <input
-              onChange={(e) => handleAddress(e)}
-              id="address"
-              name="addresschoice"
-              type="radio"
-              required
-              value={index}
-              checked={checkIndex === index}
-              className="border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm font-semibold leading-6 text-gray-900">
-                {address.name}
-              </p>
-              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                {address.phone}
-              </p>
-            </div>
-          </div>
-          {/* Stacking address details below name and phone on small screens */}
-          <div className="sm:flex sm:flex-col sm:items-end mt-3 sm:mt-0">
-            <p className="text-sm leading-6 text-gray-900">
-              {address.street}, {address.city}, {address.state}
-            </p>
-            <p className="text-xs leading-5 text-gray-500">
-              {address.pincode}
-            </p>
-          </div>
-        </li>
-      );
-    })
-  ) : (
-    <p className="mt-1 text-xl leading-6 text-red-600 text-center">
-      Add an address to make an order
-    </p>
-  )}
-</ul>
-
-
+                    {userInfo.addresses.length > 0 ? (
+                      userInfo.addresses.map((address, index) => {
+                        return (
+                          <li
+                            key={address.name}
+                            className="flex flex-col sm:flex-row justify-between border-2 px-5 gap-x-6 py-5"
+                          >
+                            <div className="flex min-w-0 gap-x-4 flex-col sm:flex-row">
+                              <input
+                                onChange={(e) => handleAddress(e)}
+                                id="address"
+                                name="addresschoice"
+                                type="radio"
+                                required
+                                value={index}
+                                checked={checkIndex === index}
+                                className="border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                              />
+                              <div className="min-w-0 flex-auto">
+                                <p className="text-sm font-semibold leading-6 text-gray-900">
+                                  {address.name}
+                                </p>
+                                <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                  {address.phone}
+                                </p>
+                              </div>
+                            </div>
+                            {/* Stacking address details below name and phone on small screens */}
+                            <div className="sm:flex sm:flex-col sm:items-end mt-3 sm:mt-0">
+                              <p className="text-sm leading-6 text-gray-900">
+                                {address.street}, {address.city},{" "}
+                                {address.state}
+                              </p>
+                              <p className="text-xs leading-5 text-gray-500">
+                                {address.pincode}
+                              </p>
+                            </div>
+                          </li>
+                        );
+                      })
+                    ) : (
+                      <p className="mt-1 text-xl leading-6 text-red-600 text-center">
+                        Add an address to make an order
+                      </p>
+                    )}
+                  </ul>
 
                   <div className="mt-10 space-y-10">
                     <fieldset>
@@ -414,7 +418,9 @@ function CheckoutPage() {
                                   {product.product.title}
                                 </a>
                               </h3>
-                              <p className="ml-4">${product.product.price}</p>
+                              <p className="ml-4">
+                                ${Math.round((product.product.price * 100) / 100)}
+                              </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {product.product.brand}
@@ -459,7 +465,7 @@ function CheckoutPage() {
 
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex  justify-between text-base font-medium text-gray-900">
-                  <p>Subtotal</p>${Math.round(totalAmount * 100) / 100}
+                  <p>Subtotal</p>${totalAmount}
                 </div>
                 <div className="flex my-2 justify-between text-base font-medium text-gray-900">
                   <p>Total Items</p>
@@ -468,13 +474,18 @@ function CheckoutPage() {
                 <p className="mt-0.5 text-sm text-gray-500">
                   Shipping and taxes calculated at checkout.
                 </p>
-                <div className="mt-6">
-                  <div
-                    onClick={handleOrder}
-                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                <div className="mt-6 ">
+                  <button
+                    onClick={!isPlacingOrder ? handleOrder : undefined}
+                    disabled={isPlacingOrder}
+                    className={`flex items-center justify-center rounded-md border border-transparent px-6 py-3 w-full text-base font-medium text-white shadow-sm ${
+                      isPlacingOrder
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
+                    }`}
                   >
-                    Order Now
-                  </div>
+                    {isPlacingOrder ? "Placing Order..." : "Order Now"}
+                  </button>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>

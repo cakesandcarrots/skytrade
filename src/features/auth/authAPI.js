@@ -19,14 +19,12 @@ export const login = async (userData) => {
       headers: { "content-type": "application/json" },
     });
 
-    const data  =await response.json()
-
     if (!response.ok) {
-
-      const error = await response.json();
-      throw new Error(error.message);
+      const errorMessage = await response.text(); // Read the error message as text
+      throw new Error(errorMessage);
     }
 
+    const data = await response.json();
     return data;
   } catch (error) {
     return { error: error.message };

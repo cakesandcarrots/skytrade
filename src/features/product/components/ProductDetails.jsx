@@ -3,20 +3,22 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
-import { addtoCartAsync } from "../../cart/cartSlice";
-import { selectProductsByUserId } from "../../cart/cartSlice";
-import { toast ,Bounce} from "react-toastify";
+import { addtoCartAsync, selectProductsByUserId } from "../../cart/cartSlice";
+import { toast, Bounce } from "react-toastify";
 import { HashLoader } from "react-spinners";
+
 export default function ProductDetails({ id }) {
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
   const cartItems = useSelector(selectProductsByUserId);
+  const [isAdding, setIsAdding] = useState(false);
+
   const colors = [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
     { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
     { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
   ];
-  const [presentInCart, setPresentInCart] = useState(0);
+
   const sizes = [
     { name: "XXS", inStock: false },
     { name: "XS", inStock: true },
@@ -27,62 +29,89 @@ export default function ProductDetails({ id }) {
     { name: "2XL", inStock: true },
     { name: "3XL", inStock: true },
   ];
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
   const highlights = [
     "Exclusive handcrafted quality for every product.",
     "Made with premium materials for unmatched durability.",
     "Customer satisfaction guaranteed with hassle-free returns.",
     "Unique designs to help you stand out effortlessly.",
   ];
-  
+
+  const isInCart =
+    product && cartItems.findIndex((item) => item.product.id === product.id) >= 0;
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (
-      cartItems.findIndex((item) => {
-        return (product.id == item.product.id);
-      }) < 0
-    ) {
-      const newItem = {
-        quantity: 1,
-        product: id,
-      };
-      dispatch(addtoCartAsync(newItem));
-      toast.success('Item added to cart', {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
+    if (isInCart || isAdding) {
+      if (isInCart) {
+        toast.warn("Item already in cart", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
         });
-    } else {
-      toast.warn('Item already added', {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-        });
-      setPresentInCart(1);
+      }
+      return;
     }
+
+    setIsAdding(true);
+
+    const newItem = {
+      quantity: 1,
+      product: id,
+    };
+    dispatch(addtoCartAsync(newItem))
+      .unwrap()
+      .then(() => {
+        toast.success("Item added to cart", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to add item to cart:", error);
+        toast.error("Failed to add item", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        setIsAdding(false);
+      });
   };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    setIsAdding(false);
+  }, [id, cartItems]);
+
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
+
   return product ? (
     <div className="bg-white">
       <div className="pt-6">
@@ -174,111 +203,118 @@ export default function ProductDetails({ id }) {
 
             <form className="mt-10">
               {/* Colors */}
-             {product.colors && product.colors.length>0 &&  <div>
-                <h3 className="text-sm font-medium text-gray-900">Color</h3>
+              {product.colors && product.colors.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
-                <fieldset aria-label="Choose a color" className="mt-4">
-                  <RadioGroup
-                    value={selectedColor}
-                    onChange={setSelectedColor}
-                    className="flex items-center space-x-3"
-                  >
-                    {product && product.sizes.length>0 && product.colors.map((color) => (
-                      <Radio
-                        key={color.name}
-                        value={color}
-                        aria-label={color.name}
-                        className={classNames(
-                          color.selectedClass,
-                          "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1"
-                        )}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={classNames(
-                            color.class,
-                            "h-8 w-8 rounded-full border border-black border-opacity-10"
-                          )}
-                        />
-                      </Radio>
-                    ))}
-                  </RadioGroup>
-                </fieldset>
-              </div>}
+                  <fieldset aria-label="Choose a color" className="mt-4">
+                    <RadioGroup
+                      value={selectedColor}
+                      onChange={setSelectedColor}
+                      className="flex items-center space-x-3"
+                    >
+                      {product &&
+                        product.sizes.length > 0 &&
+                        product.colors.map((color) => (
+                          <Radio
+                            key={color.name}
+                            value={color}
+                            aria-label={color.name}
+                            className={classNames(
+                              color.selectedClass,
+                              "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1"
+                            )}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className={classNames(
+                                color.class,
+                                "h-8 w-8 rounded-full border border-black border-opacity-10"
+                              )}
+                            />
+                          </Radio>
+                        ))}
+                    </RadioGroup>
+                  </fieldset>
+                </div>
+              )}
 
               {/* Sizes */}
-              {product.sizes && product.sizes.length>0 && <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Size guide
-                  </a>
-                </div>
+              {product.sizes && product.sizes.length > 0 && (
+                <div className="mt-10">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-gray-900">Size</h3>
+                    <a
+                      href="#"
+                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                    >
+                      Size guide
+                    </a>
+                  </div>
 
-                <fieldset aria-label="Choose a size" className="mt-4">
-                  <RadioGroup
-                    value={selectedSize}
-                    onChange={setSelectedSize}
-                    className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                  >
-                    {product.sizes.map((size) => (
-                      <Radio
-                        key={size.name}
-                        value={size}
-                        disabled={!size.inStock}
-                        className={classNames(
-                          size.inStock
-                            ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                            : "cursor-not-allowed bg-gray-50 text-gray-200",
-                          "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
-                        )}
-                      >
-                        <span>{size.name}</span>
-                        {size.inStock ? (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                          />
-                        ) : (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                          >
-                            <svg
-                              stroke="currentColor"
-                              viewBox="0 0 100 100"
-                              preserveAspectRatio="none"
-                              className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
+                  <fieldset aria-label="Choose a size" className="mt-4">
+                    <RadioGroup
+                      value={selectedSize}
+                      onChange={setSelectedSize}
+                      className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
+                    >
+                      {product.sizes.map((size) => (
+                        <Radio
+                          key={size.name}
+                          value={size}
+                          disabled={!size.inStock}
+                          className={classNames(
+                            size.inStock
+                              ? "cursor-pointer bg-white text-gray-900 shadow-sm"
+                              : "cursor-not-allowed bg-gray-50 text-gray-200",
+                            "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
+                          )}
+                        >
+                          <span>{size.name}</span>
+                          {size.inStock ? (
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
+                            />
+                          ) : (
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
                             >
-                              <line
-                                x1={0}
-                                x2={100}
-                                y1={100}
-                                y2={0}
-                                vectorEffect="non-scaling-stroke"
-                              />
-                            </svg>
-                          </span>
-                        )}
-                      </Radio>
-                    ))}
-                  </RadioGroup>
-                </fieldset>
-              </div>}
-              {presentInCart == 1 && (
-                <p className="mt-5 text-center font-bold text-red-600">
-                  Already added to cart
-                </p>
+                              <svg
+                                stroke="currentColor"
+                                viewBox="0 0 100 100"
+                                preserveAspectRatio="none"
+                                className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
+                              >
+                                <line
+                                  x1={0}
+                                  x2={100}
+                                  y1={100}
+                                  y2={0}
+                                  vectorEffect="non-scaling-stroke"
+                                />
+                              </svg>
+                            </span>
+                          )}
+                        </Radio>
+                      ))}
+                    </RadioGroup>
+                  </fieldset>
+                </div>
               )}
+
               <button
                 onClick={handleCart}
                 type="submit"
-                className="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                disabled={isInCart || isAdding}
+                className={`mt-5 flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+                  isInCart || isAdding
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-indigo-600 hover:bg-indigo-700"
+                }`}
               >
-                Add to Cart
+                {isInCart ? "In Cart" : isAdding ? "Adding..." : "Add to Cart"}
               </button>
             </form>
           </div>
@@ -287,15 +323,13 @@ export default function ProductDetails({ id }) {
             {/* Description and details */}
             <div>
               <h3 className="sr-only">Description</h3>
-
               <div className="space-y-6">
                 <p className="text-base text-gray-900">{product.description}</p>
               </div>
-            </div>
+            </div> {/* This div closes the description section */}
 
             <div className="mt-10">
               <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-
               <div className="mt-4">
                 <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
                   {highlights.map((highlight) => (
@@ -304,15 +338,15 @@ export default function ProductDetails({ id }) {
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </div> {/* This div closes the highlights content */}
+            </div> {/* This div closes the highlights section */}
+          </div> {/* This div closes the main description/highlights column */}
+        </div> {/* This div closes the main product info grid */}
+      </div> {/* This div closes the pt-6 container */}
+    </div> /* This div closes the bg-white container */
   ) : (
     <div className="flex items-center justify-center h-screen">
-    <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
-  </div>
+      <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
+    </div>
   );
 }

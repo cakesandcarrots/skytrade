@@ -213,7 +213,7 @@ export default function AdminProductList() {
                     <HashLoader color="rgba(74, 0, 128, 1)" size={50} />
                   </div>
                 ) : (
-                  <ProductGrid products={products} />
+                  <ProductGrid products={products} handleEdit={handleEdit}/>
                 )}
               </div>
             </section>

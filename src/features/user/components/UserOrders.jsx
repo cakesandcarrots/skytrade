@@ -38,7 +38,7 @@ function UserOrders() {
                           <h3>
                             <p>{item.product.title}</p>
                           </h3>
-                          <p className="ml-1 sm:ml-4 ">${item.product.price}</p>
+                          <p className="ml-1 sm:ml-4 ">${Math.round(item.product.price*100/100)}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.product.brand}
